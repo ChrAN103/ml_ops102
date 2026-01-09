@@ -2,14 +2,14 @@
 
 Project for Machine Learning Operations course (02476) by group 102
 
-Julius Gregers Gliese Winkel, s234862@student.dtu.dk \
-Rune Daugaard Harlyk, s234814@student.dtu.dk \
-Christian Amtoft Nickelsen, s234863@student.dtu.dk \
-Joseph An Duy Nguyen, s234826@student.dtu.dk \
+Julius Gregers Gliese Winkel, s234862 \
+Rune Daugaard Harlyk, s234814 \
+Christian Amtoft Nickelsen, s234863 \
+Joseph An Duy Nguyen, s234826 
 
 ### Overall goal of the project
 
-The goal of this project is implement a simple deep neural network for fake news detection. The goal is to understand the end-to-end machine learning lifecycle and not on model complexity.
+The goal of this project is to implement a simple deep neural network for fake news detection. The goal is to understand the end-to-end machine learning lifecycle and not on model complexity.
 
 ### What framework are you going to use, and you do you intend to include the framework into your project?
 
