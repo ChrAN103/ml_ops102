@@ -1,6 +1,29 @@
-# mlops_project
+## MLOps project
 
 Project for Machine Learning Operations course (02476) by group 102
+
+Julius Gregers Gliese Winkel, s234862@student.dtu.dk \
+Rune Daugaard Harlyk, s234814@student.dtu.dk \
+Christian Amtoft Nickelsen, s234863@student.dtu.dk \
+Joseph An Duy Nguyen, s234826@student.dtu.dk \
+
+### Overall goal of the project
+
+The goal of this project is implement a simple deep neural network for fake news detection. The goal is to understand the end-to-end machine learning lifecycle and not on model complexity.
+
+### What framework are you going to use, and you do you intend to include the framework into your project?
+
+Pytorch will be used as the deep learning framework. It will be included in the project via dependencies in [pyproject.toml](pyproject.toml).
+
+### What data are you going to run on (initially, may change)
+
+The dataset is sourced from [GeeksforGeeks](https://www.geeksforgeeks.org/machine-learning/fake-news-detection-using-machine-learning/). It contains 44919 rows each with 5 columns that consists of title, text, subject, date and class. Title and text will be used as input features and class, which is binary 0 for fake news and 1 for news, as the target.
+
+### What models do you expect to use
+
+We expect to use a simple Recurrent Neural Network (RNN) Long Short-Term Memory (LSTM) layers. 
+
+
 
 ## Project structure
 
