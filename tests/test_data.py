@@ -1,9 +1,9 @@
 from torch.utils.data import Dataset
 
-from mlops_project.data import MyDataset
+from mlops_project.data import NewsDataset
 
 
-def test_my_dataset():
-    """Test the MyDataset class."""
-    dataset = MyDataset("data/raw")
+def test_news_dataset():
+    """Test the NewsDataset class."""
+    dataset = NewsDataset("data/raw")
     assert isinstance(dataset, Dataset)
