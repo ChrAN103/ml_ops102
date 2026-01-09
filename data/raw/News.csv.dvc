@@ -1,0 +1,5 @@
+outs:
+- md5: aaf6af632ff9bef4ddee369938651e34
+  size: 116525400
+  hash: md5
+  path: News.csv
