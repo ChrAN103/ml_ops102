@@ -54,6 +54,18 @@ def test_model_batch_size(batch_size):
     except Exception as e:
         pytest.fail(f"Model forward pass with batch input failed: {e}")
 
+def test_training_step():
+    """Test model training step"""
+    model = Model(vocab_size=10000)
+    try:
+        input_ = torch.randint(0, 1000, (4, 10), dtype=torch.long)  # Batch of 4 samples
+        target = torch.randint(0, 2, (4,), dtype=torch.long)  # Corresponding targets
+        batch = (input_, target)
+        loss = model.training_step(batch, 0)
+        assert isinstance(loss, torch.Tensor), "Training step did not return a tensor"
+        assert loss.grad_fn is not None, "Loss should have a gradient function attached"
+    except Exception as e:
+        pytest.fail(f"Model training step failed: {e}")
 
 def test_error_on_invalid_input():
     """Test model raises error on invalid input"""
