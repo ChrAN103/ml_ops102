@@ -35,6 +35,7 @@ dependencies = [
     "tqdm>=4.66.0",
     "typer==0.21.1",
     "uvicorn==0.34.0",
+    "pytorch-lightning>=2.6.0",
 ]
 
 [dependency-groups]
