@@ -1,45 +1,46 @@
-from pytorch_lightning import LightningModule
+from lightning.pytorch import LightningModule
 import torch
 from torch import nn
 
 
-class LSTMModel(LightningModule):
+class Model(LightningModule):
     def __init__(
         self,
-        input_size: int = 1,
-        hidden_size: int = 64,
+        vocab_size: int,
+        embedding_dim: int = 128,
+        hidden_dim: int = 256,
         num_layers: int = 2,
-        output_size: int = 1,
-        dropout: float = 0.2,
-        learning_rate: float = 1e-3,
+        dropout: float = 0.3,
+        learning_rate: float = 0.001,
+        num_classes: int = 2,
     ) -> None:
         super().__init__()
         self.save_hyperparameters()
 
-        self.hidden_size = hidden_size
-        self.num_layers = num_layers
-        self.learning_rate = learning_rate
-
+        self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.lstm = nn.LSTM(
-            input_size=input_size,
-            hidden_size=hidden_size,
+            embedding_dim,
+            hidden_dim,
             num_layers=num_layers,
             batch_first=True,
             dropout=dropout if num_layers > 1 else 0.0,
         )
-        self.fc = nn.Linear(hidden_size, output_size)
-        self.criterion = nn.MSELoss()
+        self.fc = nn.Linear(hidden_dim, num_classes)
+        self.dropout = nn.Dropout(dropout)
+        self.learning_rate = learning_rate
+        self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward pass through the LSTM.
 
         Args:
-            x: Input tensor of shape (batch_size, seq_length, input_size).
+            x: Input tensor of shape (batch_size, seq_length) containing integer vocabulary indices.
 
         Returns:
-            Output tensor of shape (batch_size, output_size).
+            Output tensor of shape (batch_size, num_classes).
         """
-        lstm_out, _ = self.lstm(x)
+        embedded = self.embedding(x)
+        lstm_out, _ = self.lstm(embedded)
         out = self.fc(lstm_out[:, -1, :])
         return out
 
@@ -55,7 +56,9 @@ class LSTMModel(LightningModule):
         """
         x, y = batch
         y_hat = self(x)
-        loss = self.criterion(y_hat, y)
+        if y.dim() > 1:
+            y = y.squeeze()
+        loss = self.criterion(y_hat, y.long())
         self.log("train_loss", loss, prog_bar=True)
         return loss
 
@@ -71,7 +74,9 @@ class LSTMModel(LightningModule):
         """
         x, y = batch
         y_hat = self(x)
-        loss = self.criterion(y_hat, y)
+        if y.dim() > 1:
+            y = y.squeeze()
+        loss = self.criterion(y_hat, y.long())
         self.log("val_loss", loss, prog_bar=True)
         return loss
 
@@ -87,7 +92,9 @@ class LSTMModel(LightningModule):
         """
         x, y = batch
         y_hat = self(x)
-        loss = self.criterion(y_hat, y)
+        if y.dim() > 1:
+            y = y.squeeze()
+        loss = self.criterion(y_hat, y.long())
         self.log("test_loss", loss)
         return loss
 
@@ -98,9 +105,3 @@ class LSTMModel(LightningModule):
             Adam optimizer.
         """
         return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
-
-
-if __name__ == "__main__":
-    model = LSTMModel(input_size=10, hidden_size=64, num_layers=2, output_size=1)
-    x = torch.rand(32, 20, 10)  # (batch_size, seq_length, input_size)
-    print(f"Output shape of model: {model(x).shape}")

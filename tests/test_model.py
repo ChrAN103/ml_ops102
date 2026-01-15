@@ -1,10 +1,10 @@
-from src.mlops_project.model import LSTMModel
+from src.mlops_project.model import Model
 import torch
 import pytest
 
 def test_model_output_dim():
     """Test model class"""
-    model = LSTMModel()
+    model = Model()
     try: 
         input_ = torch.randint(0, 1000, (1, 10))  # Example integer input for embedding layer
         output = model(input_)
@@ -17,19 +17,19 @@ def test_model_output_dim():
 def test_model_initialization():
     """Test model initialization"""
     try:
-        model = LSTMModel()
+        model = Model()
     except Exception as e:
         pytest.fail(f"Model initialization failed: {e}")
 
 def test_model_parameters():
     """Test model parameters"""
-    model = LSTMModel()
+    model = Model()
     params = list(model.parameters())
     assert len(params) > 0, "Model has no parameters"
 
 def test_model_forward_pass():
     """Test model forward pass with sample input"""
-    model = LSTMModel()
+    model = Model()
     try:
         input_ = torch.randint(0, 1000, (1, 10))  # Example integer input for embedding layer
         output = model(input_)
@@ -39,14 +39,14 @@ def test_model_forward_pass():
 
 def test_model_trainable():
     """Test if model parameters are trainable"""
-    model = LSTMModel()
+    model = Model()
     for param in model.parameters():
         assert param.requires_grad, "Model parameter is not trainable"
     
 @pytest.mark.parametrize("batch_size", [32, 64])
 def test_model_batch_size(batch_size):
     """Test model with batch input"""
-    model = LSTMModel()
+    model = Model()
     try:
         input_ = torch.randint(0, 1000, (batch_size, 10))  # Batch of samples
         output = model(input_)
@@ -57,7 +57,7 @@ def test_model_batch_size(batch_size):
 
 def test_error_on_invalid_input():
     """Test model raises error on invalid input"""
-    model = LSTMModel()
+    model = Model()
     with pytest.raises(Exception, match="Input must be a tensor of integers"):
         input_ = "invalid input"
         model(input_)
