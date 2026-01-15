@@ -58,6 +58,6 @@ def test_model_batch_size(batch_size):
 def test_error_on_invalid_input():
     """Test model raises error on invalid input"""
     model = Model()
-    with pytest.raises(Exception, match="Input must be a tensor of integers"):
+    with pytest.raises(Exception, match="must be Tensor"):
         input_ = "invalid input"
         model(input_)
