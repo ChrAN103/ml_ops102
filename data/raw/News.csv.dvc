@@ -3,3 +3,7 @@ outs:
   size: 116525400
   hash: md5
   path: News.csv
+  cloud:
+    remote_storage:
+      etag: 08d1d6e2f1988d92031001
+      version_id: '1768468055108433'
