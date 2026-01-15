@@ -24,6 +24,7 @@ dependencies = [
     "fastapi==0.128.0",
     "google-api-python-client>=2.187.0",
     "gsutil>=5.35",
+    "matplotlib>=3.10.8",
     "pandas>=2.3.3",
     "pyarrow>=22.0.0",
     "scikit-learn>=1.6.0",
