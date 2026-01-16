@@ -1,11 +1,14 @@
 import fastapi
 from contextlib import asynccontextmanager
-from pathlib import Path
-import torch
-from mlops_project.model import Model
-from mlops_project.data import text_to_indices
-from pydantic import BaseModel
 from http import HTTPStatus
+from pathlib import Path
+
+import torch
+from loguru import logger
+from pydantic import BaseModel
+
+from mlops_project.data import text_to_indices
+from mlops_project.model import Model
 
 
 class PredictionRequest(BaseModel):
@@ -19,7 +22,7 @@ ctx = {}
 @asynccontextmanager
 async def lifespan(app: fastapi.FastAPI):
     model_path: Path = Path("models/model.pt")
-
+    logger.info(f"Loading model from {model_path}")
     checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
     vocab = checkpoint.get("vocab")
     vocab_size = checkpoint.get("vocab_size")
@@ -41,8 +44,10 @@ async def lifespan(app: fastapi.FastAPI):
         )
     ctx["vocab"] = vocab
     ctx["model"] = model
+    logger.success("Model loaded successfully")
     yield
     ctx.clear()
+    logger.info("Model unloaded")
 
 
 app = fastapi.FastAPI(lifespan=lifespan)

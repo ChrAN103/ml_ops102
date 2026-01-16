@@ -5,6 +5,7 @@ import re
 import pandas as pd
 import torch
 import typer
+from loguru import logger
 from sklearn.model_selection import train_test_split
 from torch.utils.data import Dataset, DataLoader
 from lightning import LightningDataModule
@@ -169,7 +170,7 @@ class NewsDataModule(LightningDataModule):
 
 def _preprocess_data(data_path: Path, output_folder: Path, test_size: float = 0.2, val_size: float = 0.2) -> None:
     """Preprocess the raw data and save it to the output folder."""
-    print(f"Loading data from {data_path}...")
+    logger.info(f"Loading data from {data_path}...")
     df = pd.read_csv(data_path)
 
     df = df.dropna(subset=["text", "class"])
@@ -189,7 +190,9 @@ def _preprocess_data(data_path: Path, output_folder: Path, test_size: float = 0.
         temp_texts, temp_labels, test_size=test_size_adjusted, random_state=42, stratify=temp_labels
     )
 
-    print(f"Train samples: {len(train_texts)}, Validation samples: {len(val_texts)}, Test samples: {len(test_texts)}")
+    logger.info(
+        f"Train samples: {len(train_texts)}, Validation samples: {len(val_texts)}, Test samples: {len(test_texts)}"
+    )
 
     output_folder.mkdir(parents=True, exist_ok=True)
 
@@ -197,19 +200,19 @@ def _preprocess_data(data_path: Path, output_folder: Path, test_size: float = 0.
     torch.save({"texts": val_texts, "labels": torch.tensor(val_labels)}, output_folder / "val.pt")
     torch.save({"texts": test_texts, "labels": torch.tensor(test_labels)}, output_folder / "test.pt")
 
-    print(f"Saved processed data to {output_folder}")
+    logger.success(f"Saved processed data to {output_folder}")
 
 
 def preprocess(data_path: Path, output_folder: Path, test_size: float = 0.2, val_size: float = 0.2) -> None:
     """Preprocess the raw data and save it to the output folder."""
-    print("Preprocessing data...")
+    logger.info("Preprocessing data...")
     data_path = Path(data_path)
     if data_path.is_dir():
         csv_files = list(data_path.glob("*.csv"))
         if not csv_files:
             raise FileNotFoundError(f"No CSV files found in {data_path}")
         data_path = csv_files[0]
-        print(f"Found CSV file: {data_path}")
+        logger.info(f"Found CSV file: {data_path}")
 
     _preprocess_data(data_path, output_folder, test_size, val_size)
 

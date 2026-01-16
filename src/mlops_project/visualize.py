@@ -1,15 +1,18 @@
 # The following code should be credited to Nicki Skafte Detlefsen and his MLOps course at 02476 - DTU.
 # It has been copied from the exercises provided in the course and modified to fit the current project structure.
 
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import typer
-from mlops_project.model import Model
-from mlops_project.data import NewsDataset
+from loguru import logger
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
-from pathlib import Path
-import numpy as np
+
+from mlops_project.data import NewsDataset
+from mlops_project.model import Model
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 
@@ -17,10 +20,10 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.ba
 def visualize(model_checkpoint: Path = Path("models/model.pt"), figure_name: str = "embeddings.png") -> None:
     """Visualize model embeddings using t-SNE."""
     if not model_checkpoint.exists():
-        print(f"Model checkpoint not found at {model_checkpoint}")
+        logger.error(f"Model checkpoint not found at {model_checkpoint}")
         return
 
-    print(f"Loading model from {model_checkpoint}")
+    logger.info(f"Loading model from {model_checkpoint}")
     checkpoint = torch.load(model_checkpoint, map_location=DEVICE, weights_only=False)
 
     vocab = checkpoint.get("vocab")
@@ -38,21 +41,21 @@ def visualize(model_checkpoint: Path = Path("models/model.pt"), figure_name: str
     # Replace the classification head with Identity to extract embeddings
     model.fc = torch.nn.Identity()
 
-    print("Loading test data...")
+    logger.info("Loading test data...")
     vals_path = Path("data/processed")
 
     try:
         test_dataset = NewsDataset(data_path=vals_path, split="test", vocab=vocab)
     except FileNotFoundError:
-        print("Test data not found, trying validation data...")
+        logger.warning("Test data not found, trying validation data...")
         test_dataset = NewsDataset(data_path=vals_path, split="val", vocab=vocab)
     except Exception as e:
-        print(f"Error loading dataset: {e}")
+        logger.error(f"Error loading dataset: {e}")
         return
 
     loader = torch.utils.data.DataLoader(test_dataset, batch_size=32)
 
-    print("Generating embeddings...")
+    logger.info("Generating embeddings...")
     embeddings_list, targets_list = [], []
     with torch.inference_mode():
         for batch in loader:
@@ -65,24 +68,24 @@ def visualize(model_checkpoint: Path = Path("models/model.pt"), figure_name: str
             targets_list.append(labels)
 
     if not embeddings_list:
-        print("No embeddings generated.")
+        logger.warning("No embeddings generated.")
         return
 
     embeddings = torch.cat(embeddings_list).numpy()
     targets = torch.cat(targets_list).numpy()
 
-    print(f"Embeddings shape: {embeddings.shape}")
+    logger.info(f"Embeddings shape: {embeddings.shape}")
 
     if embeddings.shape[1] > 500:
-        print("Reducing dimensionality with PCA...")
+        logger.info("Reducing dimensionality with PCA...")
         pca = PCA(n_components=50)
         embeddings = pca.fit_transform(embeddings)
 
-    print("Running t-SNE...")
+    logger.info("Running t-SNE...")
     tsne = TSNE(n_components=2, random_state=42)
     embeddings_2d = tsne.fit_transform(embeddings)
 
-    print("Plotting...")
+    logger.info("Plotting...")
     plt.figure(figsize=(10, 10))
 
     classes = np.unique(targets)
@@ -97,7 +100,7 @@ def visualize(model_checkpoint: Path = Path("models/model.pt"), figure_name: str
     output_path = Path("reports/figures") / figure_name
     output_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_path)
-    print(f"Figure saved to {output_path}")
+    logger.success(f"Figure saved to {output_path}")
 
 
 if __name__ == "__main__":
