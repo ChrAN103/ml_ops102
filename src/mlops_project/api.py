@@ -3,8 +3,12 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 import torch
 from mlops_project.model import Model
-from mlops_project.data import tokenize, text_to_indices
-import traceback
+from mlops_project.data import text_to_indices
+from pydantic import BaseModel
+
+class PredictionRequest(BaseModel):
+    title: str
+    text: str
 
 ctx = {}
 
@@ -39,9 +43,11 @@ async def lifespan(app: fastapi.FastAPI):
 app = fastapi.FastAPI(lifespan=lifespan)
         
 @app.post("/predict")
-async def predict(title: str, text: str) -> dict[str, str]:
+async def predict(request: PredictionRequest) -> dict[str, float]:
     try:
-        combined_text= title + " " + text
+        if 'model' not in ctx or 'vocab' not in ctx:
+            raise fastapi.HTTPException(status_code=500, detail="Model or vocabulary not loaded.")
+        combined_text= request.title + " " + request.text
         combined_text = combined_text.lower().strip()
         input_indices = text_to_indices(combined_text, ctx['vocab'], max_length=200)
         ctx['model'].eval()
@@ -54,7 +60,7 @@ async def predict(title: str, text: str) -> dict[str, str]:
             real = predicted_class == 1
         return {"prediction": real, "prob": predicted_prob}
     except Exception as e:
-        raise fastapi.HTTPException(status_code=500, detail={'error': str(e), 'traceback': traceback.format_exc()})
+        raise fastapi.HTTPException(status_code=500, detail={'error': str(e)})
     
 @app.get("/")
 def read_root() -> dict[str, str]:
