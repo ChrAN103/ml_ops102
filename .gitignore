@@ -179,3 +179,8 @@ cython_debug/
 data/raw
 data/processed
 !data/raw/News.csv.dvc
+
+# Hydra outputs
+outputs/
+multirun/
+.hydra/
