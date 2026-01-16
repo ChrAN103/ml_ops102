@@ -6,9 +6,9 @@ def test_model_output_dim():
     """Test model class"""
     model = Model()
     try: 
-        input_ = torch.randint(0, 1000, (1, 10))  # Example integer input for embedding layer
+        input_ = torch.randint(0, 1000, (1, 10), dtype=torch.float32)  # Example integer input for embedding layer
         output = model(input_)
-        assert output.shape == (1, 2), f"Expected output shape (1, 2), got {output.shape}"
+        assert output.shape == (1, out_size), f"Expected output shape (1, {out_size}), got {output.shape}"
     except Exception as e:
             # If the model expects raw text and has internal tokenization (unlikely for basic torch models but possible)
             # fallback to checking if it handles the string list directly, though usually tests mock tokenized data.
