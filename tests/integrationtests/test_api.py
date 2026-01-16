@@ -9,6 +9,7 @@ MODEL_PATH = Path("models/model.pt")
 
 # Test the root endpoint, code credited to Nicki Skafte Detlefsen and his MLOps course at 02476 - DTU.
 # It has been copied from the exercises provided in the course.
+@pytest.mark.skipif(not MODEL_PATH.exists(), reason="Model file does not exist")
 def test_read_root():
     with TestClient(app) as client:
         response = client.get("/")

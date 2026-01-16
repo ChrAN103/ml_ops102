@@ -12,12 +12,11 @@ if not MODEL_EXISTS:
 
 class QuickstartUser(HttpUser):
     wait_time = between(1, 5)  # wait between 1 and 5 seconds between tasks
-
-    @task
-    def get_root(self):
-        self.client.get("/")  # Simulate a GET request to the root endpoint
-
     if MODEL_EXISTS:
+
+        @task
+        def get_root(self):
+            self.client.get("/")  # Simulate a GET request to the root endpoint
 
         @task(3)
         def post_predict(self):
