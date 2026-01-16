@@ -3,6 +3,7 @@ from mlops_project.api import app
 
 client = TestClient(app)
 
+
 # Test the root endpoint, code credited to Nicki Skafte Detlefsen and his MLOps course at 02476 - DTU.
 # It has been copied from the exercises provided in the course.
 def test_read_root():
@@ -10,6 +11,7 @@ def test_read_root():
         response = client.get("/")
         assert response.status_code == 200
         assert response.json() == {"message": "Welcome to the News Classification API"}
+
 
 def test_predict():
     with TestClient(app) as client:

@@ -16,17 +16,21 @@ def tokenize(text: str) -> list[str]:
     text = re.sub(r"[^a-zA-Z0-9\s]", "", text)
     return text.split()
 
-def text_to_indices(text: str, vocab: dict[str, int], max_length: int = 200, unk_token: str = "<UNK>", pad_token: str = "<PAD>") -> torch.Tensor:
+
+def text_to_indices(
+    text: str, vocab: dict[str, int], max_length: int = 200, unk_token: str = "<UNK>", pad_token: str = "<PAD>"
+) -> torch.Tensor:
     """Convert text to sequence of indices."""
     words = tokenize(text)
     unk_idx = vocab.get(unk_token, 1)
     indices = [vocab.get(word, unk_idx) for word in words]
     if len(indices) > max_length:
-        indices = indices[: max_length]
+        indices = indices[:max_length]
     else:
         pad_idx = vocab.get(pad_token, 0)
         indices = indices + [pad_idx] * (max_length - len(indices))
     return torch.tensor(indices, dtype=torch.long)
+
 
 class NewsDataset(Dataset):
     """News dataset."""
@@ -211,4 +215,4 @@ def preprocess(data_path: Path, output_folder: Path, test_size: float = 0.2, val
 
 
 if __name__ == "__main__":
-    typer.run(preprocess(Path('data/raw/News.csv'), Path('data/processed')))
+    typer.run(preprocess(Path("data/raw/News.csv"), Path("data/processed")))
