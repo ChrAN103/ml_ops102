@@ -7,6 +7,7 @@ from hydra.utils import to_absolute_path
 from lightning import Trainer
 from lightning.pytorch.callbacks import ModelCheckpoint, TQDMProgressBar
 from lightning.pytorch.loggers import CSVLogger, WandbLogger
+from loguru import logger
 from omegaconf import DictConfig, OmegaConf
 
 from mlops_project.model import Model
@@ -74,19 +75,19 @@ def train(cfg: DictConfig) -> None:
         enable_progress_bar=True,
     )
 
-    print(f"Starting training for {cfg.training.epochs} epochs...")
-    print(f"Configuration:\n{OmegaConf.to_yaml(cfg)}")
+    logger.info(f"Starting training for {cfg.training.epochs} epochs...")
+    logger.debug(f"Configuration:\n{OmegaConf.to_yaml(cfg)}")
     start_time = time.time()
 
     trainer.fit(model, data_module)
 
     end_time = time.time()
     training_time = end_time - start_time
-    print(f"\nTraining completed in {training_time:.2f} seconds ({training_time / 60:.2f} minutes)")
+    logger.success(f"Training completed in {training_time:.2f} seconds ({training_time / 60:.2f} minutes)")
 
     best_model_path = checkpoint_callback.best_model_path
     if best_model_path:
-        print(f"Best model saved to {best_model_path}")
+        logger.info(f"Best model saved to {best_model_path}")
 
     final_checkpoint_path = model_save_path / "model.pt"
     checkpoint_path = best_model_path if best_model_path else checkpoint_callback.last_model_path
@@ -95,7 +96,7 @@ def train(cfg: DictConfig) -> None:
         checkpoint["vocab"] = data_module.vocab
         checkpoint["vocab_size"] = data_module.vocab_size
         torch.save(checkpoint, final_checkpoint_path)
-        print(f"Final model saved to {final_checkpoint_path}")
+        logger.info(f"Final model saved to {final_checkpoint_path}")
 
     if cfg.wandb.enabled:
         import wandb

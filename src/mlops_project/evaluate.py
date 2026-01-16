@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import torch
+from loguru import logger
 from sklearn.metrics import confusion_matrix
 import typer
 from lightning import Trainer
@@ -79,12 +80,12 @@ def evaluate(
         "confusion_matrix": cm.tolist(),
     }
 
-    print(f"Test Loss: {metrics['loss']:.4f}")
-    print(f"Accuracy: {metrics['accuracy']:.4f}")
-    print(f"Precision: {metrics['precision']:.4f}")
-    print(f"Recall: {metrics['recall']:.4f}")
-    print(f"F1 Score: {metrics['f1_score']:.4f}")
-    print(f"Confusion Matrix:\n{cm}")
+    logger.info(f"Test Loss: {metrics['loss']:.4f}")
+    logger.info(f"Accuracy: {metrics['accuracy']:.4f}")
+    logger.info(f"Precision: {metrics['precision']:.4f}")
+    logger.info(f"Recall: {metrics['recall']:.4f}")
+    logger.info(f"F1 Score: {metrics['f1_score']:.4f}")
+    logger.info(f"Confusion Matrix:\n{cm}")
 
     return metrics
 
