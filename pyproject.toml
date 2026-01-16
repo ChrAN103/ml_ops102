@@ -75,4 +75,7 @@ torchvision = [
 line-length = 120
 
 [tool.coverage.run]
-omit = ["tests/*"]
+omit = ["tests/*", "**/tmp*", "*/_remote_module*"]
+
+[tool.coverage.report]
+ignore_errors = true
