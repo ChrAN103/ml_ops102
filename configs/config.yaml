@@ -1,0 +1,36 @@
+# Main configuration file for training
+# This file can be overridden or extended using Hydra's command-line interface
+# Example: uv run src/mlops_project/train.py training.learning_rate=0.0001
+
+# Data configuration
+data:
+  data_path: "data/processed"
+  batch_size: 32
+
+# Model configuration
+model:
+  embedding_dim: 128
+  hidden_dim: 256
+  num_layers: 2
+  dropout: 0.3
+  num_classes: 2
+
+# Training configuration
+training:
+  epochs: 5
+  learning_rate: 0.001
+  accelerator: "auto"
+  devices: 1
+
+# Paths
+paths:
+  model_save_path: "models"
+  log_dir: "logs"
+
+# Hydra configuration
+hydra:
+  run:
+    dir: outputs/${now:%Y-%m-%d_%H-%M-%S}
+  sweep:
+    dir: multirun/${now:%Y-%m-%d_%H-%M-%S}
+    subdir: ${hydra.job.num}

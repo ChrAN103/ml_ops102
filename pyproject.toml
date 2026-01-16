@@ -36,6 +36,7 @@ dependencies = [
     "typer==0.21.1",
     "uvicorn==0.34.0",
     "pytorch-lightning>=2.6.0",
+    "hydra-core>=1.3.2",
 ]
 
 [dependency-groups]
@@ -74,4 +75,7 @@ torchvision = [
 line-length = 120
 
 [tool.coverage.run]
-omit = ["tests/*"]
+omit = ["tests/*", "**/tmp*", "*/_remote_module*"]
+
+[tool.coverage.report]
+ignore_errors = true
