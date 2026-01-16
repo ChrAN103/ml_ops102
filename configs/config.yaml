@@ -27,6 +27,14 @@ paths:
   model_save_path: "models"
   log_dir: "logs"
 
+# Weights & Biases configuration
+wandb:
+  enabled: true
+  project: "ml_ops102-fake-news"
+  entity: null
+  tags: ["lstm", "fake-news-detection"]
+  log_model: true
+
 # Hydra configuration
 hydra:
   run:

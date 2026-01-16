@@ -6,7 +6,7 @@ import torch
 from hydra.utils import to_absolute_path
 from lightning import Trainer
 from lightning.pytorch.callbacks import ModelCheckpoint, TQDMProgressBar
-from lightning.pytorch.loggers import CSVLogger
+from lightning.pytorch.loggers import CSVLogger, WandbLogger
 from omegaconf import DictConfig, OmegaConf
 
 from mlops_project.model import Model
@@ -48,7 +48,20 @@ def train(cfg: DictConfig) -> None:
         save_last=True,
     )
 
-    logger = CSVLogger(save_dir=log_dir, name="training")
+    loggers = []
+    csv_logger = CSVLogger(save_dir=log_dir, name="training")
+    loggers.append(csv_logger)
+
+    if cfg.wandb.enabled:
+        wandb_logger = WandbLogger(
+            project=cfg.wandb.project,
+            entity=cfg.wandb.entity,
+            tags=list(cfg.wandb.tags) if cfg.wandb.tags else None,
+            log_model=cfg.wandb.log_model,
+            save_dir=log_dir,
+            config=OmegaConf.to_container(cfg, resolve=True),
+        )
+        loggers.append(wandb_logger)
 
     progress_bar = TQDMProgressBar(refresh_rate=1)
 
@@ -57,7 +70,7 @@ def train(cfg: DictConfig) -> None:
         accelerator=cfg.training.accelerator,
         devices=cfg.training.devices,
         callbacks=[checkpoint_callback, progress_bar],
-        logger=logger,
+        logger=loggers,
         enable_progress_bar=True,
     )
 
@@ -83,6 +96,12 @@ def train(cfg: DictConfig) -> None:
         checkpoint["vocab_size"] = data_module.vocab_size
         torch.save(checkpoint, final_checkpoint_path)
         print(f"Final model saved to {final_checkpoint_path}")
+
+    if cfg.wandb.enabled:
+        import wandb
+
+        if wandb.run is not None:
+            wandb.finish()
 
 
 if __name__ == "__main__":

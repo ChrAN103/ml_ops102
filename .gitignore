@@ -184,3 +184,5 @@ data/processed
 outputs/
 multirun/
 .hydra/
+
+wandb/
