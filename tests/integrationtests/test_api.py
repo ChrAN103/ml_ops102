@@ -1,7 +1,10 @@
+from pathlib import Path
 from fastapi.testclient import TestClient
+import pytest
 from mlops_project.api import app
 
 client = TestClient(app)
+MODEL_PATH = Path("models/model.pt")
 
 
 # Test the root endpoint, code credited to Nicki Skafte Detlefsen and his MLOps course at 02476 - DTU.
@@ -13,6 +16,7 @@ def test_read_root():
         assert response.json() == {"message": "Welcome to the News Classification API"}
 
 
+@pytest.mark.skipif(not MODEL_PATH.exists(), reason="Model file does not exist")
 def test_predict():
     with TestClient(app) as client:
         response = client.post(
