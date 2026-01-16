@@ -5,6 +5,7 @@ import torch
 from mlops_project.model import Model
 from mlops_project.data import text_to_indices
 from pydantic import BaseModel
+from http import HTTPStatus
 
 class PredictionRequest(BaseModel):
     title: str
@@ -39,11 +40,12 @@ async def lifespan(app: fastapi.FastAPI):
     ctx['vocab'] = vocab
     ctx['model'] = model
     yield
+    ctx.clear()
 
 app = fastapi.FastAPI(lifespan=lifespan)
         
 @app.post("/predict")
-async def predict(request: PredictionRequest) -> dict[str, float]:
+async def predict(request: PredictionRequest) -> dict[str, bool| float]:
     try:
         if 'model' not in ctx or 'vocab' not in ctx:
             raise fastapi.HTTPException(status_code=500, detail="Model or vocabulary not loaded.")
@@ -63,5 +65,10 @@ async def predict(request: PredictionRequest) -> dict[str, float]:
         raise fastapi.HTTPException(status_code=500, detail={'error': str(e)})
     
 @app.get("/")
-def read_root() -> dict[str, str]:
-    return {"message": "Welcome to the News Classification API"}
+def root():
+    """ Health check."""
+    response = {
+        "message": HTTPStatus.OK.phrase,
+        "status-code": HTTPStatus.OK,
+    }
+    return response
