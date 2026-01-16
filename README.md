@@ -1,4 +1,4 @@
-## MLOps project
+# MLOps project
 
 Project for Machine Learning Operations course (02476) by group 102
 
@@ -6,6 +6,11 @@ Julius Gregers Gliese Winkel, s234862 \
 Rune Daugaard Harlyk, s234814 \
 Christian Amtoft Nickelsen, s234863 \
 Joseph An Duy Nguyen, s234826 
+
+### Status
+
+[![Unit Tests](https://github.com/ChrAN103/ml_ops102/actions/workflows/tests.yaml/badge.svg)](https://github.com/ChrAN103/ml_ops102/actions/workflows/tests.yaml)
+[![Code linting](https://github.com/ChrAN103/ml_ops102/actions/workflows/linting.yaml/badge.svg)](https://github.com/ChrAN103/ml_ops102/actions/workflows/linting.yaml)
 
 ### Overall goal of the project
 
