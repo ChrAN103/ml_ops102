@@ -4,6 +4,7 @@ from pathlib import Path
 import torch
 from mlops_project.model import Model
 from mlops_project.data import tokenize, text_to_indices
+import traceback
 
 ctx = {}
 
@@ -42,8 +43,7 @@ async def predict(title: str, text: str) -> dict[str, str]:
     try:
         combined_text= title + " " + text
         combined_text = combined_text.lower().strip()
-        tokenized_text = tokenize(combined_text)
-        input_indices = text_to_indices(tokenized_text, ctx['vocab'], max_length=200)
+        input_indices = text_to_indices(combined_text, ctx['vocab'], max_length=200)
         ctx['model'].eval()
         with torch.no_grad():
             input_tensor = input_indices.unsqueeze(0)
@@ -54,7 +54,7 @@ async def predict(title: str, text: str) -> dict[str, str]:
             real = predicted_class == 1
         return {"prediction": real, "prob": predicted_prob}
     except Exception as e:
-        return {"error": str(e)}
+        raise fastapi.HTTPException(status_code=500, detail={'error': str(e), 'traceback': traceback.format_exc()})
     
 @app.get("/")
 def read_root() -> dict[str, str]:
