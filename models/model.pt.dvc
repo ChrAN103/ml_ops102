@@ -1,0 +1,9 @@
+outs:
+- md5: 4943eb798995da943c606f01c2176761
+  size: 305611681
+  hash: md5
+  path: model.pt
+  cloud:
+    remote_storage:
+      etag: 08c993b3eda89792031001
+      version_id: '1768815938292169'
