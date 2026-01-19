@@ -1,9 +1,13 @@
-FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
 
-# system deps only if one actually need to compile native deps
 RUN apt-get update \
- && apt-get install -y --no-install-recommends build-essential gcc \
- && rm -rf /var/lib/apt/lists/*
+ && apt-get install -y --no-install-recommends python3.11 python3.11-venv python3-pip curl build-essential gcc \
+ && rm -rf /var/lib/apt/lists/* \
+ && ln -sf /usr/bin/python3.11 /usr/bin/python3 \
+ && ln -sf /usr/bin/python3.11 /usr/bin/python
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:$PATH"
 
 WORKDIR /app
 
