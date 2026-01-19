@@ -29,7 +29,9 @@ steps:
     'europe-west1',
     '--platform',
     'managed',
-    '--allow-unauthenticated'
+    '--allow-unauthenticated',
+    '--add-volume=name=model-bucket,type=cloud-storage,bucket=ml_ops_102_bucket',
+    '--add-volume-mount=volume=model-bucket,mount-path=/gcs/ml_ops_102_bucket'
   ]
 options:
   logging: CLOUD_LOGGING_ONLY

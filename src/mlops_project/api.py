@@ -5,7 +5,6 @@ from pathlib import Path
 
 import fastapi
 import torch
-from google.cloud import storage
 from loguru import logger
 from pydantic import BaseModel
 
@@ -14,7 +13,7 @@ from mlops_project.model import Model
 
 GCS_BUCKET = os.getenv("GCS_BUCKET", "ml_ops_102_bucket")
 GCS_MODEL_PATH = os.getenv("GCS_MODEL_PATH", "models/model.pt")
-LOCAL_MODEL_PATH = Path(os.getenv("LOCAL_MODEL_PATH", "models/model.pt"))
+LOCAL_MODEL_PATH = Path(os.getenv("LOCAL_MODEL_PATH", f"/gcs/{GCS_BUCKET}/{GCS_MODEL_PATH}"))
 
 
 class PredictionRequest(BaseModel):
@@ -25,23 +24,9 @@ class PredictionRequest(BaseModel):
 ctx = {}
 
 
-def download_model_from_gcs(bucket_name: str, source_blob: str, destination: Path) -> None:
-    """Download model from Google Cloud Storage."""
-    logger.info(f"Downloading model from gs://{bucket_name}/{source_blob}")
-    client = storage.Client()
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(source_blob)
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    blob.download_to_filename(str(destination))
-    logger.success(f"Model downloaded to {destination}")
-
-
 @asynccontextmanager
 async def lifespan(app: fastapi.FastAPI):
     model_path = LOCAL_MODEL_PATH
-
-    if not model_path.exists():
-        download_model_from_gcs(GCS_BUCKET, GCS_MODEL_PATH, model_path)
 
     logger.info(f"Loading model from {model_path}")
     checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
