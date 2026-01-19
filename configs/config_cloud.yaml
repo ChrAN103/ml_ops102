@@ -1,0 +1,14 @@
+defaults:
+  - config
+
+data:
+  data_path: "/gcs/ml_ops_102_bucket/data/processed"
+
+paths:
+  model_save_path: "/gcs/ml_ops_102_bucket/models"
+  log_dir: "/gcs/ml_ops_102_bucket/logs"
+
+hydra:
+  run:
+    dir: /gcs/ml_ops_102_bucket/outputs/${now:%Y-%m-%d_%H-%M-%S}
+

@@ -6,3 +6,5 @@ workerPoolSpecs:
     replicaCount: 1
     containerSpec:
         imageUri: europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/train:latest
+        args:
+            - "--config-name=config_cloud"
