@@ -5,4 +5,4 @@ workerPoolSpecs:
         acceleratorCount: 1
     replicaCount: 1
     containerSpec:
-        imageUri: europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/image1:latest
+        imageUri: europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/train:latest
