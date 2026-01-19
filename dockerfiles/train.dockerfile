@@ -1,12 +1,28 @@
-FROM ghcr.io/astral-sh/uv:python3.13-alpine AS base
+FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
 
-COPY uv.lock uv.lock
-COPY pyproject.toml pyproject.toml
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3.11 python3.11-venv python3-pip curl build-essential gcc \
+ && rm -rf /var/lib/apt/lists/* \
+ && ln -sf /usr/bin/python3.11 /usr/bin/python3 \
+ && ln -sf /usr/bin/python3.11 /usr/bin/python
 
-RUN uv sync --frozen --no-install-project
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:$PATH"
 
-COPY src src/
+WORKDIR /app
 
-RUN uv sync --frozen
+COPY pyproject.toml uv.lock README.md LICENSE ./
 
-ENTRYPOINT ["uv", "run", "src/mlops_project/train.py"]
+# Install deps but not project code yet
+ENV UV_LINK_MODE=copy
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-install-project
+
+# Now copy code/configs 
+COPY src/ src/
+COPY configs/ configs/
+
+# Install project itself
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen
+
+# Vertex passes CLI args; this just runs module
+ENTRYPOINT ["uv", "run", "python", "-m", "mlops_project.train"]

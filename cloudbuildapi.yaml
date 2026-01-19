@@ -1,0 +1,37 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Build container image'  
+  env:
+    - 'DOCKER_BUILDKIT=1'
+  args: [
+    'build',
+    '.',
+    '-t',
+    'europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/fastapi:latest',
+    '-f',
+    'dockerfiles/api.dockerfile'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Push container image'
+  args: [
+    'push',
+    'europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/fastapi:latest'
+  ]
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: 'Deploy to Cloud Run'
+  args: [
+    'run',
+    'deploy',
+    'my-fastapi-service',
+    '--image',
+    'europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/fastapi:latest',
+    '--region',
+    'europe-west1',
+    '--platform',
+    'managed',
+    '--allow-unauthenticated',
+    '--add-volume=name=model-bucket,type=cloud-storage,bucket=ml_ops_102_bucket',
+    '--add-volume-mount=volume=model-bucket,mount-path=/gcs/ml_ops_102_bucket'
+  ]
+options:
+  logging: CLOUD_LOGGING_ONLY
