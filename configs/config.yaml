@@ -30,7 +30,7 @@ paths:
 # Weights & Biases configuration
 wandb:
   enabled: true
-  project: "ml_ops102-fake-news"
+  project: "ML Ops 102"
   entity: null
   tags: ["lstm", "fake-news-detection"]
   log_model: true
