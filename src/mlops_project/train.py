@@ -44,7 +44,7 @@ class TorchProfilerCallback(Callback):
 
         return acts
 
-    def on_fit_start(self, trainer: Trainer, pl_module: torch.nn.Module) -> None:  
+    def on_fit_start(self, trainer: Trainer, pl_module: torch.nn.Module) -> None:
         if not bool(getattr(self.cfg, "enabled", False)):
             return
 
@@ -80,11 +80,11 @@ class TorchProfilerCallback(Callback):
     def on_train_batch_end(
         self,
         trainer: Trainer,
-        pl_module: torch.nn.Module,  
+        pl_module: torch.nn.Module,
         outputs,
         batch,
         batch_idx: int,
-    ) -> None:  
+    ) -> None:
         if self.prof is not None and self._entered:
             self.prof.step()
 
@@ -99,7 +99,7 @@ class TorchProfilerCallback(Callback):
 
             trace_dir = self.log_dir / str(getattr(self.cfg, "trace_subdir", "profile"))
             (trace_dir / "key_averages.txt").write_text(summary)
-        except Exception as e:  
+        except Exception as e:
             logger.warning(f"Failed to write profiler summary: {e}")
         finally:
             self.prof.__exit__(None, None, None)
