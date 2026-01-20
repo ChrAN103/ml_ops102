@@ -42,6 +42,8 @@ dependencies = [
     "wandb>=0.23",
     "loguru>=0.7.0",
     "google-cloud-storage>=2.18.0",
+    "torch-tb-profiler>=0.4.3",
+    "snakeviz>=2.2.2",
 ]
 
 [dependency-groups]
