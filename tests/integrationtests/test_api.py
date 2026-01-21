@@ -15,7 +15,10 @@ def test_read_root():
     with TestClient(app) as client:
         response = client.get("/")
         assert response.status_code == 200
-        assert response.json() == {"message": "Welcome to the News Classification API"}
+        json_response = response.json()
+        assert json_response["message"] == "OK"
+        assert json_response["status-code"] == 200
+        assert "device" in json_response
 
 
 @pytest.mark.skipif(not MODEL_PATH.exists(), reason="Model file does not exist")
