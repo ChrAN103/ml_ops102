@@ -214,9 +214,10 @@ The `dvc pull` command fetches the data and model files from our GCS bucket.
 > Answer:
 
 We used ruff check for linting and ruff format for formatting.
-These checks happen continuously and consistently as they are integrated into a Github actions
-workflow that runs for every pull requests.
+These checks happen continuously and consistently as they are integrated into a Github actions workflow that runs for every pull requests.
 We also implemented a Github ruleset to block force pushes to the main branch and require all changes to be merged through pull requests.
+Typing in python is only suggestive, but it can be a great deal of help understanding interfaces.
+We used typing to make sure our function parameters are easy to understand.
 These concepts are important for larger project because, as it enforces a unified formatted code and quality through automatic testing.
 
 ## Version control
@@ -251,7 +252,14 @@ These concepts are important for larger project because, as it enforces a unifie
 >
 > Answer:
 
---- question 8 fill here ---
+The total code coverage is 65%, which includes all our source code.
+The API module has the highest coverage at 94%, while data.py (52%) and model.py (56%) have lower coverage.
+Even if we had 100% code coverage, we could not trust the code to be completely error-free.
+Code coverage only measures which lines are executed during tests, not whether the tests verify correct behavior.
+A test could execute every line but use assertions that never fail.
+Additionally, coverage cannot catch integration issues, race conditions, or edge cases that weren't anticipated.
+It also cannot verify that the model produces meaningful predictions or that the API handles concurrent requests correctly.
+Coverage is useful for identifying untested code paths, but should be combined with meaningful assertions and integration tests.
 
 ### Question 9
 
