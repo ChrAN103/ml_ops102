@@ -6,7 +6,7 @@ from pathlib import Path
 import fastapi
 import torch
 from loguru import logger
-from prometheus_client import Counter, Histogram, Summary, make_asgi_app
+from prometheus_client import Counter, Gauge, Histogram, Info, Summary, make_asgi_app
 from pydantic import BaseModel
 
 from mlops_project.data import text_to_indices
@@ -21,6 +21,14 @@ prediction_latency = Histogram(
     buckets=(0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0),
 )
 text_length_summary = Summary("input_text_length_chars", "Summary of input text lengths in characters")
+prediction_classes = Counter("prediction_classes_total", "Predictions by class", ["class_label"])
+prediction_confidence = Histogram(
+    "prediction_confidence",
+    "Model confidence distribution",
+    buckets=(0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 1.0),
+)
+model_info = Info("model", "Model information")
+requests_in_progress = Gauge("requests_in_progress", "Number of requests currently being processed")
 
 MODEL_PATH = Path(os.getenv("MODEL_PATH", "models/model.pt"))
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
@@ -62,6 +70,7 @@ async def lifespan(app: fastapi.FastAPI):
     model = model.to(DEVICE)
     ctx["vocab"] = vocab
     ctx["model"] = model
+    model_info.info({"device": str(DEVICE), "model_path": str(MODEL_PATH), "vocab_size": str(vocab_size)})
     logger.success(f"Model loaded successfully on {DEVICE}")
     yield
     ctx.clear()
@@ -75,8 +84,9 @@ app.mount("/metrics", make_asgi_app())
 @app.post("/predict")
 async def predict(request: PredictionRequest) -> dict[str, bool | float]:
     prediction_requests.inc()
-    with prediction_latency.time():
-        try:
+    requests_in_progress.inc()
+    try:
+        with prediction_latency.time():
             if "model" not in ctx or "vocab" not in ctx:
                 raise fastapi.HTTPException(status_code=500, detail="Model or vocabulary not loaded.")
             combined_text = request.title + " " + request.text
@@ -91,10 +101,14 @@ async def predict(request: PredictionRequest) -> dict[str, bool | float]:
                 predicted_class = torch.argmax(probabilities, dim=1).item()
                 predicted_prob = probabilities[0, predicted_class].item()
                 real = predicted_class == 1
+            prediction_classes.labels(class_label="real" if real else "fake").inc()
+            prediction_confidence.observe(predicted_prob)
             return {"prediction": real, "prob": predicted_prob}
-        except Exception as e:
-            prediction_errors.inc()
-            raise fastapi.HTTPException(status_code=500, detail=str(e)) from e
+    except Exception as e:
+        prediction_errors.inc()
+        raise fastapi.HTTPException(status_code=500, detail=str(e)) from e
+    finally:
+        requests_in_progress.dec()
 
 
 @app.get("/")
