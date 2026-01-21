@@ -1,0 +1,35 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Build container image'  
+  env:
+    - 'DOCKER_BUILDKIT=1'
+  args: [
+    'build',
+    '.',
+    '-t',
+    'europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/streamlit:latest',
+    '-f',
+    'dockerfiles/frontend.dockerfile'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Push container image'
+  args: [
+    'push',
+    'europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/streamlit:latest'
+  ]
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: 'Deploy to Cloud Run'
+  args: [
+    'run',
+    'deploy',
+    'streamlit-frontend',
+    '--image',
+    'europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/streamlit:latest',
+    '--region',
+    'europe-west1',
+    '--platform',
+    'managed',
+    '--allow-unauthenticated',
+  ]
+options:
+  logging: CLOUD_LOGGING_ONLY
