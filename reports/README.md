@@ -237,7 +237,10 @@ These concepts are important for larger project because, as it enforces a unifie
 >
 > Answer:
 
---- question 7 fill here ---
+In total we have implemented 17 tests.
+We have 6 tests for data loading (`test_data.py`) that verify the NewsDataset class works correctly for train/val/test splits, vocabulary size, and sample output types.
+We have 9 tests for model construction (`test_model.py`) covering output dimensions, initialization, forward pass, and training step.
+We also have 2 API integration tests (`test_api.py`) for the root and predict endpoints.
 
 ### Question 8
 
