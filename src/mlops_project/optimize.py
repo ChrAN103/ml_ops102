@@ -107,17 +107,15 @@ def onnx_port(
         model=model,
         args=(dummy_input,),
         f=str(onnx_raw),
-        input_names=["input"],   # Name of input node in ONNX graph
-        output_names=["output"], # Name of output node in ONNX graph
-        # 1. Use "x" to match the forward(self, x) signature
-        # 2. Remove "output" from this dict; it's inferred automatically
+        input_names=["input"], 
+        output_names=["output"],
         dynamic_axes={"input": {0: "batch_size", 1: "seq_len"}, "output": {0: "batch_size"}},
         dynamo=False,
     )
 
     quant_pre_process(
             input_model=str(onnx_raw),
-            output_model_path=str(onnx_preprocessed), # We can output directly to final path here
+            output_model_path=str(onnx_preprocessed),
             skip_optimization=False
         )
                                            
