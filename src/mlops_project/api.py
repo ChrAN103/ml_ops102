@@ -194,7 +194,25 @@ def run_analysis(reference_data: pd.DataFrame, formatted_current_data: pd.DataFr
     # Create and run the data drift report
     report = Report(metrics=[DataDriftPreset(), DataQualityPreset(), TargetDriftPreset()])
     report.run(reference_data=reference_data, current_data=formatted_current_data)
+    # save locally
     report.save_html("monitoring.html")
+    # also save to GCS with a timestamped filename
+    client = storage.Client()
+    bucket = client.bucket(BUCKET_NAME)
+    now = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
+    html_content = report.get_html()
+    # save timestamped report to GCS
+    blob = bucket.blob(f"reports/data_drift_report_{now}.html")
+    blob.upload_from_string(html_content, content_type="text/html")
+
+    # save/update latest report to GCS
+    latest_blob = bucket.blob("reports/data_drift_report_latest.html")
+    latest_blob.upload_from_string(html_content, content_type="text/html")
+
+    logger.info(f"Report saved to GCS: reports/data_drift_report_{now}.html")
+
+    return html_content
+
 
 @app.post("/predict")
 async def predict(request: PredictionRequest) -> dict[str, bool | float]:
@@ -232,11 +250,7 @@ async def predict(request: PredictionRequest) -> dict[str, bool | float]:
 async def get_report(n: int | None = None):
     """Generate and return the report."""
     reference_data, formatted_current_data = load_data(n)
-    run_analysis(reference_data, formatted_current_data)
-
-    async with await anyio.open_file("monitoring.html", encoding="utf-8") as f:
-        html_content = await f.read()
-
+    html_content = run_analysis(reference_data, formatted_current_data)
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/")
