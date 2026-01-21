@@ -134,7 +134,7 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
-s234862, s234814, s234863, s234826 
+s234862, s234814, s234863, s234826
 
 ### Question 3
 > **Did you end up using any open-source frameworks/packages not covered in the course during your project? If so**
@@ -147,8 +147,6 @@ s234862, s234814, s234863, s234826
 > *package to do ... and ... in our project*.
 >
 > Answer:
-
---- question 3 fill here ---
 
 ## Coding environment
 
@@ -168,17 +166,23 @@ s234862, s234814, s234863, s234826
 >
 > Answer:
 
-
-
+We used uv for managing our dependencies.
+All dependencies are listed in `pyproject.toml`, and the exact versions are locked in uv.lock.
+Development dependencies (pytest, ruff, coverage, mkdocs, pre-commit) are organized in a separate `[dependency-groups] dev` section.
+When adding new packages, we used `uv add <package>` which automatically updates both files.
+For PyTorch specifically, we configured conditional index sources in `pyproject.toml` to pull CUDA-enabled builds on Linux/Windows and CPU builds on macOS.
 
 To get an exact copy of the environment, one has to run
 
-```
+```bash
 git clone https://github.com/ChrAN103/ml_ops102.git
 cd ml_ops102
 uv sync
 dvc pull
 ```
+
+The `uv sync` command creates a virtual environment and installs all locked dependencies.
+The `dvc pull` command fetches the data and model files from our GCS bucket.
 
 ### Question 5
 
@@ -209,7 +213,11 @@ dvc pull
 >
 > Answer:
 
-We used ruff check for linting and ruff format for formatting. These checks happen continuously and consistenly as they are integrated into a Github actions workflow that runs for every pull requests. And a Github ruleset was implemented to block force pushes to the main branch and require all changes to be merged through pull requests. 
+We used ruff check for linting and ruff format for formatting.
+These checks happen continuously and consistently as they are integrated into a Github actions
+workflow that runs for every pull requests.
+We also implemented a Github ruleset to block force pushes to the main branch and require all changes to be merged through pull requests.
+These concepts are important for larger project because, as it enforces a unified formatted code and quality through automatic testing.
 
 ## Version control
 
@@ -258,7 +266,14 @@ We used ruff check for linting and ruff format for formatting. These checks happ
 >
 > Answer:
 
---- question 9 fill here ---
+We made use of both branches and pull requests in our project.
+Each team member worked on short lived feature branches when implementing new functionality.
+For example, branches were created for API development, Docker configuration, and CI/CD setup.
+To merge code into main, we created pull requests that triggered our GitHub Actions workflows for linting and testing.
+A GitHub ruleset was configured to block direct pushes to main and require all changes to go through pull requests.
+This workflow helped us catch bugs early through automated testing and
+ensured code quality through the mandatory linting checks before merging.
+Before creating pull requests, we rebased our branches on main.
 
 ### Question 10
 
