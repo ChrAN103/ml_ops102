@@ -31,7 +31,8 @@ steps:
     'managed',
     '--allow-unauthenticated',
     '--add-volume=name=model-bucket,type=cloud-storage,bucket=ml_ops_102_bucket',
-    '--add-volume-mount=volume=model-bucket,mount-path=/gcs/ml_ops_102_bucket'
+    '--add-volume-mount=volume=model-bucket,mount-path=/gcs/ml_ops_102_bucket',
+    '--set-env-vars=MODEL_PATH=/gcs/ml_ops_102_bucket/models/model.pt'
   ]
 options:
   logging: CLOUD_LOGGING_ONLY
