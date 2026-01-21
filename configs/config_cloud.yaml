@@ -12,3 +12,5 @@ hydra:
   run:
     dir: /gcs/ml_ops_102_bucket/outputs/${now:%Y-%m-%d_%H-%M-%S}
 
+api:
+  logging_location: "/gcs/ml_ops_102_bucket/logs"

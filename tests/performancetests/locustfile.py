@@ -24,7 +24,7 @@ class QuickstartUser(HttpUser):
             texts = [
                 "This is a sample news article text.",
                 "The quick brown fox jumps over the lazy dog.",
-                "In today's news, we explore the impact of technology on society.",
+                "In today's news we explore the impact of technology on society.",
                 "Sports events are resuming with new safety protocols in place.",
                 "Economic trends show a significant shift in market dynamics.",
             ]

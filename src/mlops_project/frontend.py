@@ -1,6 +1,3 @@
-import os
-
-import pandas as pd
 import requests
 import streamlit as st
 
@@ -19,7 +16,7 @@ import traceback
 
 def classify_news(title, text):
     """Send the article to the backend for classification."""
-    predict_url = f"https://my-fastapi-service-358298092496.europe-west1.run.app/predict"
+    predict_url = "https://my-fastapi-service-358298092496.europe-west1.run.app/predict"
     response = requests.post(predict_url, json={"title": title, "text": text}, timeout=40)
     if response.status_code == 200:
         return response.json()
@@ -39,7 +36,7 @@ def main() -> None:
         try:
             prediction = result["prediction"]
             probability = result["prob"]
-            
+
             # show the prediction and probability for the highest class
             predicted_class = "Real" if prediction else "Fake News"
             st.write("Prediction:", predicted_class)
