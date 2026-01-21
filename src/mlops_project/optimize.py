@@ -37,6 +37,7 @@ def load_model(model_path: Path = MODEL_PATH) -> Model:
     vocab = checkpoint.get("vocab")
     return model, vocab
 
+
 def _parameters_to_prune(model: nn.Module) -> Tuple[Tuple[nn.Module, str], ...]:
     """Collect prunable parameters across the model.
 
@@ -60,6 +61,7 @@ def _parameters_to_prune(model: nn.Module) -> Tuple[Tuple[nn.Module, str], ...]:
         parameters.append((module, param_name))
     return tuple(parameters)
 
+
 def prune_model(model: nn.Module, amount: float = 0.2) -> nn.Module:
     """Prune a model with global unstructured pruning.
 
@@ -80,6 +82,7 @@ def prune_model(model: nn.Module, amount: float = 0.2) -> nn.Module:
         pruning.remove(module, param_name)
     return model
 
+
 def save_vocab(vocab: dict[str, int], output_path: Path) -> None:
     """Save vocab in a standard JSON format."""
     with open(output_path, "w", encoding="utf-8") as f:
@@ -91,17 +94,9 @@ def _quantatize_onnx(model_path: Path) -> nn.Module:
 
     onnx_preprocessed = model_path.with_name(model_path.stem + "_preprocessed.onnx")
 
-    quant_pre_process(
-        input_model=str(model_path),
-        output_model_path=str(onnx_preprocessed),
-        skip_optimization=False
-    )
-                                           
-    quantize_dynamic(
-        model_input=str(onnx_preprocessed),
-        model_output=str(model_path),
-        weight_type=QuantType.QInt8
-    )
+    quant_pre_process(input_model=str(model_path), output_model_path=str(onnx_preprocessed), skip_optimization=False)
+
+    quantize_dynamic(model_input=str(onnx_preprocessed), model_output=str(model_path), weight_type=QuantType.QInt8)
 
     onnx_preprocessed.unlink()
 
@@ -133,7 +128,7 @@ def onnx_port(
         model=model,
         args=(dummy_input,),
         f=str(output_path),
-        input_names=["input"], 
+        input_names=["input"],
         output_names=["output"],
         dynamic_axes={"input": {0: "batch_size", 1: "seq_len"}, "output": {0: "batch_size"}},
         dynamo=False,

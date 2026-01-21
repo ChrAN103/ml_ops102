@@ -17,13 +17,14 @@ class PyTorchPredictor:
         self.model = torch.compile(model, mode="reduce-overhead").to(device)
         self.model.eval()
         self.device = device
-        
+
     def predict(self, batch_text: torch.Tensor) -> np.ndarray:
         """Return predicted class indices for a batch."""
         with torch.inference_mode():
             inputs = batch_text.to(self.device)
             logits = self.model(inputs)
             return torch.argmax(logits, dim=1).cpu().numpy()
+
 
 class ONNXPredictor:
     """ONNX Runtime inference wrapper."""
@@ -40,6 +41,7 @@ class ONNXPredictor:
         inputs = {self.input_name: batch_text}
         logits = self.session.run(None, inputs)[0]
         return np.argmax(logits, axis=1)
+
 
 def benchmark(
     predictor: PyTorchPredictor | ONNXPredictor,
@@ -60,31 +62,31 @@ def benchmark(
 
     print("Starting benchmark...")
     start_global = time.perf_counter()
-    
+
     for i, batch in enumerate(dataloader):
         if limit_batches and i >= limit_batches:
             break
-        
+
         texts, labels = batch
         if labels.dim() > 1:
             labels = labels.squeeze()
-        
+
         t0 = time.perf_counter()
         preds = predictor.predict(texts)
         t1 = time.perf_counter()
-        
+
         latencies.append((t1 - t0) * 1000)
-        
+
         all_preds.extend(preds)
         all_labels.extend(labels.cpu().numpy())
 
     total_time = time.perf_counter() - start_global
-    
+
     # Metrics
     acc = accuracy_score(all_labels, all_preds)
     avg_latency = np.mean(latencies)
     p95_latency = np.percentile(latencies, 95)
-    
+
     return {
         "accuracy": acc,
         "avg_latency_ms": avg_latency,
@@ -93,6 +95,7 @@ def benchmark(
         "predictions": all_preds,
         "labels": all_labels,
     }
+
 
 def _load_checkpoint_metadata(model_path: Path) -> tuple[dict[str, int], int, dict[str, object]]:
     """Load vocab and hyperparameters from a Lightning checkpoint."""
@@ -145,18 +148,12 @@ def compare_models() -> None:
     onnx_predictor = ONNXPredictor(onnx_path)
     onnx_results = benchmark(onnx_predictor, loader)
 
-    
-    print(
-        f"PyTorch Accuracy: {pt_results['accuracy']:.4f} | "
-        f"Avg Latency: {pt_results['avg_latency_ms']:.2f}ms | "
-    )
-    print(
-        f"ONNX    Accuracy: {onnx_results['accuracy']:.4f} | "
-        f"Avg Latency: {onnx_results['avg_latency_ms']:.2f}ms"
-    )
+    print(f"PyTorch Accuracy: {pt_results['accuracy']:.4f} | Avg Latency: {pt_results['avg_latency_ms']:.2f}ms | ")
+    print(f"ONNX    Accuracy: {onnx_results['accuracy']:.4f} | Avg Latency: {onnx_results['avg_latency_ms']:.2f}ms")
 
     speedup = pt_results["avg_latency_ms"] / onnx_results["avg_latency_ms"]
     print(f"Speedup Factor: {speedup:.2f}x")
+
 
 if __name__ == "__main__":
     compare_models()

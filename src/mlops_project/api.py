@@ -47,6 +47,7 @@ requests_in_progress = Gauge("requests_in_progress", "Number of requests current
 
 BUCKET_NAME = "ml_ops_102_bucket"
 
+
 def get_onnx_providers():
     available = ort.get_available_providers()
     providers = []
@@ -56,8 +57,10 @@ def get_onnx_providers():
         providers.append("CoreMLExecutionProvider")
     providers.append("CPUExecutionProvider")
     return providers
- 
+
+
 DEVICE = get_onnx_providers()
+
 
 class PredictionRequest(BaseModel):
     title: str
@@ -71,7 +74,6 @@ ctx = {}
 async def lifespan(app: FastAPI):
     model_path = LOCAL_MODEL_PATH
     vocab_path = LOAD_VOCAB_PATH
-
 
     logger.info(f"Loading model from {model_path}")
     model = ort.InferenceSession(str(model_path), providers=DEVICE)
@@ -214,6 +216,7 @@ def run_analysis(reference_data: pd.DataFrame, formatted_current_data: pd.DataFr
 
     return html_content
 
+
 @app.post("/predict")
 async def predict(request: PredictionRequest, background_tasks: BackgroundTasks) -> dict[str, bool | float]:
     prediction_requests.inc()
@@ -222,21 +225,21 @@ async def predict(request: PredictionRequest, background_tasks: BackgroundTasks)
         with prediction_latency.time():
             if "model" not in ctx or "vocab" not in ctx:
                 raise HTTPException(status_code=500, detail="Model or vocabulary not loaded.")
-            
+
             combined_text = (request.title + " " + request.text).lower().strip()
             text_length_summary.observe(len(combined_text))
-            
+
             input_indices = text_to_indices(combined_text, ctx["vocab"], max_length=200)
             input_tensor = input_indices.numpy().astype("int64").reshape(1, -1)
-            
+
             outputs = ctx["model"].run(None, {"input": input_tensor})
             logits = outputs[0][0]
             probs = np.exp(logits) / np.sum(np.exp(logits))
-            
+
             predicted_class = int(np.argmax(probs))
             predicted_prob = float(probs[predicted_class])
-            real = (predicted_class == 1)
-            
+            real = predicted_class == 1
+
             prediction_classes.labels(class_label="real" if real else "fake").inc()
             prediction_confidence.observe(predicted_prob)
 
@@ -250,12 +253,15 @@ async def predict(request: PredictionRequest, background_tasks: BackgroundTasks)
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         requests_in_progress.dec()
+
+
 @app.get("/report")
 async def get_report(n: int | None = None):
     """Generate and return the report."""
     reference_data, formatted_current_data = load_data(n)
     html_content = run_analysis(reference_data, formatted_current_data)
     return HTMLResponse(content=html_content, status_code=200)
+
 
 @app.get("/")
 def root():
