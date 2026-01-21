@@ -34,6 +34,7 @@ def load_model(model_path: Path = MODEL_PATH) -> Model:
         strict=False,
     )
 
+
 def _parameters_to_prune(model: nn.Module) -> Tuple[Tuple[nn.Module, str], ...]:
     """Collect prunable parameters across the model.
 
@@ -56,6 +57,7 @@ def _parameters_to_prune(model: nn.Module) -> Tuple[Tuple[nn.Module, str], ...]:
             continue
         parameters.append((module, param_name))
     return tuple(parameters)
+
 
 def prune_model(model: nn.Module, amount: float = 0.2) -> nn.Module:
     """Prune a model with global unstructured pruning.
@@ -107,8 +109,8 @@ def onnx_port(
         model=model,
         args=(dummy_input,),
         f=str(onnx_raw),
-        input_names=["input"],   # Name of input node in ONNX graph
-        output_names=["output"], # Name of output node in ONNX graph
+        input_names=["input"],  # Name of input node in ONNX graph
+        output_names=["output"],  # Name of output node in ONNX graph
         # 1. Use "x" to match the forward(self, x) signature
         # 2. Remove "output" from this dict; it's inferred automatically
         dynamic_axes={"input": {0: "batch_size", 1: "seq_len"}, "output": {0: "batch_size"}},
@@ -116,19 +118,16 @@ def onnx_port(
     )
 
     quant_pre_process(
-            input_model=str(onnx_raw),
-            output_model_path=str(onnx_preprocessed), # We can output directly to final path here
-            skip_optimization=False
-        )
-                                           
-    quantize_dynamic(
-        model_input=str(onnx_preprocessed),
-        model_output=str(output_path),
-        weight_type=QuantType.QInt8
+        input_model=str(onnx_raw),
+        output_model_path=str(onnx_preprocessed),  # We can output directly to final path here
+        skip_optimization=False,
     )
+
+    quantize_dynamic(model_input=str(onnx_preprocessed), model_output=str(output_path), weight_type=QuantType.QInt8)
 
     onnx_preprocessed.unlink()
     onnx_raw.unlink()
+
 
 if __name__ == "__main__":
     model = load_model()

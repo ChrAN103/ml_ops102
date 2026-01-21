@@ -14,7 +14,6 @@ from prometheus_client import Counter, Gauge, Histogram, Info, Summary, make_asg
 from pydantic import BaseModel
 from evidently.legacy.report import Report
 from evidently.legacy.metric_preset import DataDriftPreset, DataQualityPreset, TargetDriftPreset
-import anyio
 from fastapi.responses import HTMLResponse
 
 from mlops_project.data import text_to_indices
@@ -43,9 +42,6 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.ba
 
 BUCKET_NAME = "ml_ops_102_bucket"
 
-if not LOCAL_MODEL_PATH.exists() and Path("models/model.pt").exists():
-    LOCAL_MODEL_PATH = Path("models/model.pt")
-
 
 class PredictionRequest(BaseModel):
     title: str
@@ -56,7 +52,7 @@ ctx = {}
 
 
 @asynccontextmanager
-async def lifespan(app: fastapi.FastAPI):
+async def lifespan(app: FastAPI):
     logger.info(f"Using device: {DEVICE}")
     logger.info(f"Loading model from {MODEL_PATH}")
     checkpoint = torch.load(MODEL_PATH, map_location=DEVICE, weights_only=False)
@@ -89,8 +85,10 @@ async def lifespan(app: fastapi.FastAPI):
     ctx.clear()
     logger.info("Model unloaded")
 
-app = fastapi.FastAPI(lifespan=lifespan)
+
+app = FastAPI(lifespan=lifespan)
 app.mount("/metrics", make_asgi_app())
+
 
 # Save results to GCP
 def save_prediction_to_gcp(
@@ -215,13 +213,16 @@ def run_analysis(reference_data: pd.DataFrame, formatted_current_data: pd.DataFr
 
 
 @app.post("/predict")
-async def predict(request: PredictionRequest) -> dict[str, bool | float]:
+async def predict(
+    request: PredictionRequest,
+    background_tasks: BackgroundTasks,
+) -> dict[str, bool | float]:
     prediction_requests.inc()
     requests_in_progress.inc()
     try:
         with prediction_latency.time():
             if "model" not in ctx or "vocab" not in ctx:
-                raise fastapi.HTTPException(status_code=500, detail="Model or vocabulary not loaded.")
+                raise HTTPException(status_code=500, detail="Model or vocabulary not loaded.")
             combined_text = request.title + " " + request.text
             combined_text = combined_text.lower().strip()
             text_length_summary.observe(len(combined_text))
@@ -238,13 +239,16 @@ async def predict(request: PredictionRequest) -> dict[str, bool | float]:
             prediction_confidence.observe(predicted_prob)
 
             now = str(datetime.now(tz=timezone.utc))
-            background_tasks.add_task(save_prediction_to_gcp, now, request.title, request.text, predicted_class, predicted_prob)
+            background_tasks.add_task(
+                save_prediction_to_gcp, now, request.title, request.text, predicted_class, predicted_prob
+            )
             return {"prediction": real, "prob": predicted_prob}
     except Exception as e:
         prediction_errors.inc()
-        raise fastapi.HTTPException(status_code=500, detail=str(e)) from e
+        raise HTTPException(status_code=500, detail=str(e)) from e
     finally:
         requests_in_progress.dec()
+
 
 @app.get("/report")
 async def get_report(n: int | None = None):
@@ -252,6 +256,7 @@ async def get_report(n: int | None = None):
     reference_data, formatted_current_data = load_data(n)
     html_content = run_analysis(reference_data, formatted_current_data)
     return HTMLResponse(content=html_content, status_code=200)
+
 
 @app.get("/")
 def root():
