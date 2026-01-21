@@ -2,8 +2,9 @@ import os
 from contextlib import asynccontextmanager
 from http import HTTPStatus
 from pathlib import Path
+from fastapi import BackgroundTasks, FastAPI, HTTPException
 
-import fastapi
+from datetime import datetime, timezone
 import torch
 from loguru import logger
 from prometheus_client import Counter, Gauge, Histogram, Info, Summary, make_asgi_app
@@ -32,6 +33,9 @@ requests_in_progress = Gauge("requests_in_progress", "Number of requests current
 
 MODEL_PATH = Path(os.getenv("MODEL_PATH", "models/model.pt"))
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
+
+if not LOCAL_MODEL_PATH.exists() and Path("models/model.pt").exists():
+    LOCAL_MODEL_PATH = Path("models/model.pt")
 
 
 class PredictionRequest(BaseModel):
