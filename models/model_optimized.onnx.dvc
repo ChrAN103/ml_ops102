@@ -1,0 +1,9 @@
+outs:
+- md5: 9175db68255e1b81616059a3f77b3cbf
+  size: 25141040
+  hash: md5
+  path: model_optimized.onnx
+  cloud:
+    remote_storage:
+      etag: 08d992c281d99c92031001
+      version_id: '1769000664074585'

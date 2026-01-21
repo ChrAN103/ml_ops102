@@ -1,0 +1,9 @@
+outs:
+- md5: 0bc06eb84554d7851d5e7322a208ebf8
+  size: 4124969
+  hash: md5
+  path: vocab.json
+  cloud:
+    remote_storage:
+      etag: 08dbcbc9bee99c92031001
+      version_id: '1769005087090139'
