@@ -527,7 +527,7 @@ Finally, Compute Engine is used for training models with GPU support, allowing u
 >
 > Answer:
 
---- question 23 fill here ---
+We did manage to write an API for our model. We used FastAPI to do this. We did this by creating am API post endpoint called predict that runs inference on our optimized model. We also added a lifespan function that loads our model and vocab for tokenization, so it is ready for the prediction API. The prediction API recieves a title and text as strings as a pydantic schema and it outputs the prediction as a bool and the probabilty as a float. The API will raise a error code 500 if there is any internal error in the code.
 
 ### Question 24
 
