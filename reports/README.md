@@ -178,7 +178,7 @@ To get an exact copy of the environment, one has to run
 git clone https://github.com/ChrAN103/ml_ops102.git
 cd ml_ops102
 uv sync
-dvc pull
+uv run dvc pull
 ```
 
 The `uv sync` command creates a virtual environment and installs all locked dependencies.
@@ -198,7 +198,9 @@ The `dvc pull` command fetches the data and model files from our GCS bucket.
 >
 > Answer:
 
---- question 5 fill here ---
+From the course MLOps cookiecutter template we have filled out the src, dockerfiles, configs, tests folders. We removed the notebooks folder as we did not use any jupyter files.
+We have have added a logs folder that contains wandb and hydra logs after running our train.py.
+src/mlops_project is our main folder with all python files, were development of data processing, training, optimizing, evaluating, visualizing, api's and frontend is done. config and dockerfiles folders contains files for correct setup. tests folder contains all our tests for finding errors. models, logs, reports/figures and data folders are updated by running files like data.py, train.py, optimize.py, evaluate.py, visualize.py or by using dvc.
 
 ### Question 6
 
@@ -299,7 +301,7 @@ Before creating pull requests, we rebased our branches on main.
 >
 > Answer:
 
---- question 10 fill here ---
+We did make use of DVC in the following way: It was used for pushing and pulling data between google cloud. It could also be used for version control of our data and models but as we did have changes to our dataset, it was mostly used as a way to connect our local computers to data in google cloud. Our setup will support version control of our data and models by using DVC and pushing the dvc files to GitHub if changes was made under development.
 
 ### Question 11
 
@@ -316,14 +318,7 @@ Before creating pull requests, we rebased our branches on main.
 >
 > Answer:
 
-We created continuous integration using linting tests, unittests and operating system tests. Our tests were added to github through the workflows folder ensuring everything was functioning and to high enough quality when merging branches on main.
-
-Our linting test: To ensure proper code formatting and quality we used Ruff. A linting test was also added to github so when merging on the main branch you’d have to keep your code up to the standards of Ruff. Ruff was chosen for its speed, automatic fixing capabilities and because of the recommendation from the course.
-
-Unittests: Our unittests covered files data.py, model.py and api.py. We created the tests in a dedicated tests folder containing test_data.py and test_model.py. These tests ensured data_path to different parts of the dataset existed and worked as well as testing model output, forward pass and initialization. We also had two subfolders for api testing, one fore test_api.py checking if the api functions and calls worked and another for performance test containing locustfile.py. This file was used to simulate many users and many request for our api.
-
-Finally we also tested on operating systems including Ubuntu-latest, Windows-latest and MacOS-latest as well as python 3.13 and 3.14.
-
+--- question 11 fill here ---
 
 ## Running code and tracking experiments
 
@@ -359,7 +354,7 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 13 fill here ---
+
 
 ### Question 14
 
