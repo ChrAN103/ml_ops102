@@ -391,7 +391,19 @@ DVC was used for exactly what it is named, data version control. By tracking dat
 >
 > Answer:
 
---- question 14 fill here ---
+We used Weight and Biases for tracking our models training process. The following images are build from the logs wanb has saved.
+
+![Training and Validation Loss](figures/loss_curve.png)
+
+Above image tracks training and validation loss which are important factors when evaluating a models performance. We need this to see that our model converges We also see the model perhaps slightly overfits at the end since the validation loss slightly rises. Overall the loss was minimized almost to zero.
+
+![Training and Validation Accuracy](figures/accuracy_curve.png)
+
+Above is seen the training and validation accuraccy, it is tracked every step and every epoch. This is a direct way to see how our model performs at classifying fake news by telling us how many correct clasification it makes. We see it almost reaches 100% accuracy on our validation and training data.
+
+Wandb did track system efficency and hyperparameters. This means we didnt store what hardware we had for each training process and how well it was utilized. This means reproducibility is something you can achieve. We did not do any hyperparameter sweeps as our model performed very well on the first run on our dataset.
+
+A final comment of these graphs are that we only ran 5 epochs as the model managed to converge so fast not pushing us to improve it nor it training process.
 
 ### Question 15
 
