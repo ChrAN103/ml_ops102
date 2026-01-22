@@ -5,14 +5,13 @@ from pathlib import Path
 import typer
 from loguru import logger
 
+
 def plot_metrics(
-    log_dir: Path = Path("logs/training"), 
-    version: int = None,
-    output_dir: Path = Path("reports/figures")
+    log_dir: Path = Path("logs/training"), version: int = None, output_dir: Path = Path("reports/figures")
 ):
     """
     Plots training and validation metrics from PyTorch Lightning CSV logs.
-    
+
     Args:
         log_dir: Base directory where logs are saved (default: logs/training)
         version: Specific version to plot. If None, picks the latest version.
@@ -45,31 +44,31 @@ def plot_metrics(
 
     # Create output directory
     output_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Set style
     sns.set_theme(style="whitegrid")
 
     # --- Plot 1: Training & Validation Loss ---
     plt.figure(figsize=(10, 6))
-    
+
     # Training loss is usually logged per step
     # We drop NaNs to get clean lines
-    train_loss = df[['step', 'train_loss_step']].dropna()
+    train_loss = df[["step", "train_loss_step"]].dropna()
     # val_loss = df[['epoch', 'val_loss']].dropna()
-    
+
     # Add validation loss mapped to steps (approximate based on max step per epoch)
-    # Or just plot on secondary x-axis (Epochs). 
+    # Or just plot on secondary x-axis (Epochs).
     # Here we'll plot Training Loss by Step
-    
-    sns.lineplot(data=train_loss, x='step', y='train_loss_step', label='Train Loss (Step)', alpha=0.6)
-    
+
+    sns.lineplot(data=train_loss, x="step", y="train_loss_step", label="Train Loss (Step)", alpha=0.6)
+
     # Plot Val Loss as points (since it's per epoch)
     # We need to map epoch to step to overlay them, or just plot on separate axes.
     # Let's verify if 'step' is logged for validation rows
-    val_loss_with_step = df[['step', 'val_loss']].dropna()
+    val_loss_with_step = df[["step", "val_loss"]].dropna()
     if not val_loss_with_step.empty:
-        sns.lineplot(data=val_loss_with_step, x='step', y='val_loss', label='Val Loss', marker='o', linewidth=2)
-    
+        sns.lineplot(data=val_loss_with_step, x="step", y="val_loss", label="Val Loss", marker="o", linewidth=2)
+
     plt.title("Training & Validation Loss")
     plt.xlabel("Step")
     plt.ylabel("Loss")
@@ -80,16 +79,16 @@ def plot_metrics(
 
     # --- Plot 2: Accuracy ---
     plt.figure(figsize=(10, 6))
-    
-    train_acc = df[['step', 'train_acc_step']].dropna()
-    val_acc = df[['step', 'val_acc']].dropna()
+
+    train_acc = df[["step", "train_acc_step"]].dropna()
+    val_acc = df[["step", "val_acc"]].dropna()
 
     if not train_acc.empty:
-        sns.lineplot(data=train_acc, x='step', y='train_acc_step', label='Train Acc', alpha=0.6)
-    
+        sns.lineplot(data=train_acc, x="step", y="train_acc_step", label="Train Acc", alpha=0.6)
+
     if not val_acc.empty:
-        sns.lineplot(data=val_acc, x='step', y='val_acc', label='Val Acc', marker='o', linewidth=2)
-        
+        sns.lineplot(data=val_acc, x="step", y="val_acc", label="Val Acc", marker="o", linewidth=2)
+
     plt.title("Training & Validation Accuracy")
     plt.xlabel("Step")
     plt.ylabel("Accuracy")
@@ -98,6 +97,7 @@ def plot_metrics(
     plt.savefig(output_dir / "accuracy_curve.png")
     logger.success(f"Saved accuracy_curve.png to {output_dir}")
     plt.close()
+
 
 if __name__ == "__main__":
     typer.run(plot_metrics)
