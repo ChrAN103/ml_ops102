@@ -97,9 +97,9 @@ will check the repositories and the code to verify your answers.
 
 ### Week 3
 
-* [ ] Check how robust your model is towards data drifting (M27)
-* [ ] Setup collection of input-output data from your deployed application (M27)
-* [ ] Deploy to the cloud a drift detection API (M27)
+* [x] Check how robust your model is towards data drifting (M27)
+* [x] Setup collection of input-output data from your deployed application (M27)
+* [x] Deploy to the cloud a drift detection API (M27)
 * [x] Instrument your API with a couple of system metrics (M28)
 * [ ] Setup cloud monitoring of your instrumented application (M28)
 * [ ] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
@@ -114,7 +114,7 @@ will check the repositories and the code to verify your answers.
 * [ ] Revisit your initial project description. Did the project turn out as you wanted?
 * [ ] Create an architectural diagram over your MLOps pipeline
 * [ ] Make sure all group members have an understanding about all parts of the project
-* [ ] Uploaded all your code to GitHub
+* [x] Uploaded all your code to GitHub
 
 ## Group information
 
@@ -602,7 +602,12 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 30 fill here ---
+The biggest challenges in the project was probably the cloud setup and working on features in the same files.
+The cloud setup was new to all of us, as we mainly have run models locally or using DTU HPC platform.
+Setting up workflow triggers and building docker images had a bit of a learning curve.
+As the project is on the smaller scale, multiple features were simutanious depending on the same files,
+which meant conflics. We overcome this by rebasing regularly and resolving conflics early.
+An example of this was the `api.py` were we had three consecutive PR's changing the file.
 
 ### Question 31
 
