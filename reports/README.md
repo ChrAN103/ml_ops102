@@ -353,9 +353,11 @@ All workflows use uv with caching enabled to speed up runs.
 >
 > Answer:
 
-We used Hydra to configure experiments. All experiment parameters are defined in a config.yaml file. To experiment with training the model we could run:
+We used Hydra to configure experiments. All experiment parameters are defined in `config.yaml` including model architecture settings, training hyperparameters like learning rate and batch size, data paths, and logging options. Hydra allows overriding any parameter from the command line without modifying the config file. To experiment with different settings we could run:
 
 'uv run python src/mlops_project/train.py training.epochs=1'
+
+This flexibility made it easy to test different configurations quickly during development.
 
 ### Question 13
 
@@ -571,7 +573,7 @@ We did manage to write an API for our model. We used FastAPI to do this. We did 
 For development we firstly ran our API locally directly to test and iterate fast.
 We then created a Docker image using api.dockerfile, and tested it worked as expected on our own machines.
 Then we setup GCloud to build the image whenever there are pushes to main in relevant files.
-When the image is finished building, it's automatically deployed using Cloud Run. 
+When the image is finished building, it's automatically deployed using Cloud Run.
 
 This means that when we merge a PR which touches relevant files like `api.py`, `api.dockerfile` or `pyproject.toml`, a new version of the API is built and deployed automatically.
 
@@ -650,8 +652,8 @@ Cloud Run's built-in monitoring gives us visibility into system health and perfo
 
 ![Cloud build](figures/billings.png)
 
-During the project group member s234826 used 5.3 dollars, s234863 used 3.93 dollars, s234862 used 3.73 dollars and s234814 used 4.03 dollars. As seen in the figure above, the Artifact Registry service was clearly the most expensive. Plenty of dockerfiles has been pushed to the registry during the project and the registry has a size of 155 GB due to that. A clean-up policy of keeping only the latest 5 versions of an image was implemented but perhaps it does not work as intended. 
-Generally working with GCP was an exhaustive process due to the many services that one has to learn/use but provided a great insight into designing and operating scaleable ML systems. 
+During the project group member s234826 used 5.3 dollars, s234863 used 3.93 dollars, s234862 used 3.73 dollars and s234814 used 4.03 dollars. As seen in the figure above, the Artifact Registry service was clearly the most expensive. Plenty of dockerfiles has been pushed to the registry during the project and the registry has a size of 155 GB due to that. A clean-up policy of keeping only the latest 5 versions of an image was implemented but perhaps it does not work as intended.
+Generally working with GCP was an exhaustive process due to the many services that one has to learn/use but provided a great insight into designing and operating scaleable ML systems.
 
 ### Question 28
 
@@ -728,7 +730,7 @@ An example of this was the `api.py` were we had three consecutive PR's changing 
 Overall deep collaboration has been made across the board.
 By this we mean a feature pushed by one student could be the work of multiple.
 
-s234862: Starting model architecture, setting up FastAPI predict endpoint and frontend.py, quantitizing, (testing pruning) and building ONNX graph for PyTorch model for faster inference. 
+s234862: Starting model architecture, setting up FastAPI predict endpoint and frontend.py, quantitizing, (testing pruning) and building ONNX graph for PyTorch model for faster inference.
 
 s234814: Setup hydra for config management, weights and biases for training monitoring, logguru for logging and Prometheus for tracking our custom metrics.
 Have also worked on CI pipeline, setting up rules, and build and trigger in GCloud.
