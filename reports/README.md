@@ -486,7 +486,7 @@ Finally, Compute Engine is used for training models with GPU support, allowing u
 >
 > Answer:
 
---- question 20 fill here ---
+![Container registry](figures/registry.png)
 
 ### Question 21
 
