@@ -625,7 +625,8 @@ Cloud Run's built-in monitoring gives us visibility into system health and perfo
 >
 > Answer:
 
---- question 28 fill here ---
+We implemented a frontend for out api, which makes it alot easier for potential user to test and try out our api, before integrating it in their system.
+Its also just a much nicer user experience to interact with the api through a GUI
 
 ### Question 29
 
