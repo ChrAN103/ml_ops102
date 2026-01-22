@@ -303,9 +303,7 @@ Before creating pull requests, we rebased our branches on main.
 >
 > Answer:
 
-We did make use of DVC in the following way: It was used for pushing and pulling data between google cloud.
-It could also be used for version control of our data and models but as we did have changes to our dataset, it was mostly used as a way to connect our local computers to data in google cloud.
-Our setup will support version control of our data and models by using DVC and pushing the dvc files to GitHub if changes was made under development.
+We did make use of DVC in the following way: It was used for pushing and pulling data between google cloud. It could also be used for version control of our data and models but as we did have changes to our dataset, it was mostly used as a way to connect our local computers to data in google cloud. Our current setup will support version control of our data and models by using DVC and pushing the dvc files to GitHub if changes was made under development. It could beneficial to have version control of our data if we had different preprocessing of our data.
 
 ### Question 11
 
@@ -675,10 +673,11 @@ Its also just a much nicer user experience to interact with the api through a GU
 > *Whenever we commit code and push to GitHub, it auto triggers ... and ... . From there the diagram shows ...*
 >
 > Answer:
-[this figure](figures/overview.png)
-The starting point of the diagram is our local setup, where we integrated hydra configs and test for our source code. A precommit ruff check runs before pushing to GitHub. When a branch is merged into main Github actions triggers and os, linting and unit tests.
-The Google Cloud Platform loads code from our GitHub repository and builds docker images and sends them to artifacts registry. If it is a train image it will be send to GPU training using vertex AI. Model is also optimized. This will send models to our bucket and log training data with WandB. The models and data is connected to DVC.
-If it is an API image it will use serverless compute for running. This FastAPI will run on the serverless together with the streamlit fronted. The FastAPI will connects the backend to the frontend and loads the model from the bucket.The user can then access our frontend that is hosted at google cloud serverless that also runs the optimized model inference.
+
+![this figure](figures/overview.png)
+The starting point of the diagram is our local setup, where we integrated hydra configs and test for our source code. A precommit ruff check runs before pushing to GitHub. When a branch is merged into main Github actions triggers and os, linting and unit tests. Developers can access code here and pull data using DVC.
+The Google Cloud Platform loads code from our GitHub repository and builds docker images and sends them to artifacts registry. If it is a train image it will be send to GPU training using vertex AI. Model is also optimized by quantatizing and porting to ONNX. Then it will send model and vocab to our bucket. It will also log training data and metrics in real time with WandB. The models and data in the bucket is connected to DVC.
+If it is an API docker image it will use serverless compute for hosting. The FastAPI will run on the serverless compute together with the streamlit fronted. The FastAPI will connects the backend to the frontend and loads the model from the bucket.The user can then access our frontend that is hosted at google cloud serverless that also runs the optimized model inference.
 
 ### Question 30
 
