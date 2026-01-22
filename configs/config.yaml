@@ -24,8 +24,10 @@ training:
 
 # Paths
 paths:
-  model_save_path: "models"
-  log_dir: "logs"
+  output_dir: "outputs"
+  models_dir: "${paths.output_dir}/models"
+  checkpoints_dir: "${paths.output_dir}/checkpoints"
+  log_dir: "${paths.output_dir}/logs"
 
 # Weights & Biases configuration
 wandb:
@@ -49,21 +51,18 @@ profiling:
   trace_subdir: "profiler"
   use_cuda: "auto"
 
-  # Common profiler toggles
   record_shapes: true
   profile_memory: false
   with_stack: false
   with_flops: false
   with_modules: false
 
-  # Profiler schedule
   schedule:
     wait: 1
     warmup: 1
     active: 3
     repeat: 1
 
-  # Text summary settings 
   table_sort_by: "self_cpu_time_total"
   table_row_limit: 50
 
