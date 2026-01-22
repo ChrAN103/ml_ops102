@@ -1,9 +1,11 @@
 from pathlib import Path
 
+import hydra
 import torch
+from hydra.utils import to_absolute_path
 from loguru import logger
+from omegaconf import DictConfig
 from sklearn.metrics import confusion_matrix
-import typer
 from lightning import Trainer
 
 from mlops_project.model import Model
@@ -11,8 +13,8 @@ from mlops_project.data import NewsDataModule
 
 
 def evaluate(
-    model_path: Path = Path("models/model.pt"),
-    data_path: Path = Path("data/processed"),
+    model_path: Path,
+    data_path: Path,
     batch_size: int = 32,
     accelerator: str = "auto",
     devices: int = 1,
@@ -90,5 +92,26 @@ def evaluate(
     return metrics
 
 
+@hydra.main(version_base=None, config_path="../../configs", config_name="config")
+def main(cfg: DictConfig) -> None:
+    """Evaluate the model using configuration from Hydra.
+
+    Args:
+        cfg: Hydra configuration object containing all paths and settings.
+    """
+    models_dir = Path(to_absolute_path(cfg.paths.models_dir))
+    data_path = Path(to_absolute_path(cfg.data.data_path))
+
+    model_path = models_dir / cfg.paths.model_filename
+
+    evaluate(
+        model_path=model_path,
+        data_path=data_path,
+        batch_size=cfg.data.batch_size,
+        accelerator=cfg.training.accelerator,
+        devices=cfg.training.devices,
+    )
+
+
 if __name__ == "__main__":
-    typer.run(evaluate)
+    main()

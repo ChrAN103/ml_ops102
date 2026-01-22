@@ -190,7 +190,7 @@ def train(cfg: DictConfig) -> None:
     if best_model_path:
         logger.info(f"Best model saved to {best_model_path}")
 
-    final_checkpoint_path = models_dir / "model.pt"
+    final_checkpoint_path = models_dir / cfg.paths.model_filename
     checkpoint_path = best_model_path if best_model_path else checkpoint_callback.last_model_path
     if checkpoint_path:
         checkpoint = torch.load(checkpoint_path, map_location="cpu")

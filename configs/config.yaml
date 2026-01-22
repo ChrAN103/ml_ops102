@@ -28,6 +28,9 @@ paths:
   models_dir: "${paths.output_dir}/models"
   checkpoints_dir: "${paths.output_dir}/checkpoints"
   log_dir: "${paths.output_dir}/logs"
+  model_filename: "model.pt"
+  vocab_filename: "vocab.json"
+  optimized_model_filename: "model_optimized.onnx"
 
 # Weights & Biases configuration
 wandb:
@@ -40,12 +43,14 @@ wandb:
 # Hydra configuration
 hydra:
   run:
-    dir: outputs/${now:%Y-%m-%d_%H-%M-%S}
+    dir: .
   sweep:
     dir: multirun/${now:%Y-%m-%d_%H-%M-%S}
     subdir: ${hydra.job.num}
+  job:
+    chdir: false
 
-# Profiling configuration 
+# Profiling configuration
 profiling:
   enabled: false
   trace_subdir: "profiler"

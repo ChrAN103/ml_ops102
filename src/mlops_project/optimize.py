@@ -2,9 +2,12 @@ from pathlib import Path
 from typing import Tuple
 import json
 
+import hydra
 import torch
 from torch import nn
 from torch.nn.utils import prune as pruning
+from hydra.utils import to_absolute_path
+from omegaconf import DictConfig
 
 from onnxruntime.quantization import quantize_dynamic, QuantType
 from onnxruntime.quantization.shape_inference import quant_pre_process
@@ -12,17 +15,14 @@ from onnxruntime.quantization.shape_inference import quant_pre_process
 from mlops_project.model import Model
 
 
-MODEL_PATH: Path = Path("models/model.pt")
-
-
-def load_model(model_path: Path = MODEL_PATH) -> Model:
+def load_model(model_path: Path) -> Model:
     """Load a trained model checkpoint.
 
     Args:
         model_path: Path to the model checkpoint.
 
     Returns:
-        Loaded model instance.
+        Loaded model instance and vocabulary.
     """
     checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
     vocab_size = checkpoint.get("vocab_size")
@@ -137,8 +137,24 @@ def onnx_port(
     _quantatize_onnx(output_path)
 
 
+@hydra.main(version_base=None, config_path="../../configs", config_name="config")
+def optimize(cfg: DictConfig) -> None:
+    """Optimize a trained model through pruning and ONNX export with quantization.
+
+    Args:
+        cfg: Hydra configuration object containing all paths and settings.
+    """
+    models_dir = Path(to_absolute_path(cfg.paths.models_dir))
+    models_dir.mkdir(parents=True, exist_ok=True)
+
+    model_path = models_dir / cfg.paths.model_filename
+    vocab_path = models_dir / cfg.paths.vocab_filename
+    onnx_path = models_dir / cfg.paths.optimized_model_filename
+
+    model, vocab = load_model(model_path)
+    save_vocab(vocab, output_path=vocab_path)
+    onnx_port(model, output_path=onnx_path)
+
+
 if __name__ == "__main__":
-    model, vocab = load_model()
-    save_vocab(vocab, output_path=Path("models/vocab.json"))
-    # pruned_model = prune_model(model, amount=0.3)
-    onnx_port(model, output_path=Path("models/model_optimized.onnx"))
+    optimize()
