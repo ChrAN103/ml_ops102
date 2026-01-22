@@ -4,9 +4,21 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '**.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/linting.yaml'
+      - '.pre-commit-config.yaml'
   pull_request:
     branches:
       - main
+    paths:
+      - '**.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/linting.yaml'
+      - '.pre-commit-config.yaml'
 
 jobs:
   format:

@@ -142,6 +142,15 @@ class NewsDataModule(LightningDataModule):
                 self.test_dataset = NewsDataset(
                     self.data_path, split="test", vocab=self.vocab, max_length=self.max_length
                 )
+        if stage == "validate" or stage is None:
+            if self.val_dataset is None:
+                if self.vocab is None:
+                    train_ds = NewsDataset(self.data_path, split="train", max_length=self.max_length)
+                    self.vocab = train_ds.vocab
+                    self.vocab_size = train_ds.vocab_size
+                self.val_dataset = NewsDataset(
+                    self.data_path, split="val", vocab=self.vocab, max_length=self.max_length
+                )
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(

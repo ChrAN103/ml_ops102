@@ -24,4 +24,4 @@ COPY configs/ configs/
 
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen
 
-ENTRYPOINT ["uv", "run", "python", "-m", "mlops_project.train"]
+ENTRYPOINT ["bash", "-lc", "uv run python -m mlops_project.train && uv run python -m mlops_project.optimize"]
