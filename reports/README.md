@@ -666,4 +666,15 @@ An example of this was the `api.py` were we had three consecutive PR's changing 
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
---- question 31 fill here ---
+Overall deep collaboration has been made across the board. By this we mean a feature pushed by one student could be the work of multiple.
+
+s234862:
+
+s234814:
+
+s234863: Set up the intial cookie cutter project and github repository.
+Also worked on unittests combining them with github through yaml files. Worked on load tests, logging of how users used API, report creation for data drifting, DVC, and google cloud bucket.
+
+s234826:
+
+Generative AI: All AI use was through github copilot in Agent/Ask mode. Generative AI was used throughout the project. Most use was for debugging and understanding bugs and errors we stumbled upon. Furthermore AI has been used in some parts to get us started on larger and less straight forward parts of the project if the code given in the course was not sufficient for our workcase. Lastly it has been a helping hand for logic problems.
