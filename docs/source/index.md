@@ -14,7 +14,6 @@ This project implements a deep neural network for fake news detection using PyTo
 
 - [Workflow](workflow.md) - Development workflow and project structure
 - [Running Locally](local-setup.md) - Setup and run the project on your machine
-- [Cloud Setup](cloud-setup.md) - Google Cloud Platform deployment guide
 
 ## Team
 
