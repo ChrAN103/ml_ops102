@@ -558,7 +558,11 @@ Finally, Compute Engine is used for training models with GPU support, allowing u
 >
 > Answer:
 
---- question 25 fill here ---
+We did write test for our API, both unittesting and load testing. Unittests included the calls you could make for the API, reading the root, predicting and report creation. This ensured it all functioned properly.
+
+Our load test was created using locust. We tested reading the root and the predict function. Given the predict call was the actual use of the model we put a weight of 3 on it. This also made it easy to identify which calls were causing issues as root caling would average to 25% error rate and predict to 75%. We did the load test with 25 users with a wait time between 1 and 5 second and a ramp up of 1 user. Below is a image of a short locust run:
+
+![Short locust test](figures/locust_test.png)
 
 ### Question 26
 
