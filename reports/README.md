@@ -112,7 +112,7 @@ will check the repositories and the code to verify your answers.
 * [x] Write some documentation for your application (M32)
 * [x] Publish the documentation to GitHub Pages (M32)
 * [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Create an architectural diagram over your MLOps pipeline
+* [x] Create an architectural diagram over your MLOps pipeline
 * [x] Make sure all group members have an understanding about all parts of the project
 * [x] Uploaded all your code to GitHub
 
@@ -147,6 +147,8 @@ s234862, s234814, s234863, s234826
 > *package to do ... and ... in our project*.
 >
 > Answer:
+
+We did not use any frameworks or packages that was not covered in the course.
 
 ## Coding environment
 
@@ -301,7 +303,9 @@ Before creating pull requests, we rebased our branches on main.
 >
 > Answer:
 
-We did make use of DVC in the following way: It was used for pushing and pulling data between google cloud. It could also be used for version control of our data and models but as we did have changes to our dataset, it was mostly used as a way to connect our local computers to data in google cloud. Our setup will support version control of our data and models by using DVC and pushing the dvc files to GitHub if changes was made under development.
+We did make use of DVC in the following way: It was used for pushing and pulling data between google cloud.
+It could also be used for version control of our data and models but as we did have changes to our dataset, it was mostly used as a way to connect our local computers to data in google cloud.
+Our setup will support version control of our data and models by using DVC and pushing the dvc files to GitHub if changes was made under development.
 
 ### Question 11
 
@@ -391,7 +395,7 @@ DVC was used for exactly what it is named, data version control. By tracking dat
 >
 > Answer:
 
-We used Weight and Biases for tracking our models training process. The following images are build from the logs wanb has saved.
+We used Weight and Biases for tracking our models training process. The following images are build from the logs wandb has saved.
 
 ![Training and Validation Loss](figures/loss_curve.png)
 
@@ -399,9 +403,9 @@ Above image tracks training and validation loss which are important factors when
 
 ![Training and Validation Accuracy](figures/accuracy_curve.png)
 
-Above is seen the training and validation accuraccy, it is tracked every step and every epoch. This is a direct way to see how our model performs at classifying fake news by telling us how many correct clasification it makes. We see it almost reaches 100% accuracy on our validation and training data.
+Above is seen the training and validation accuracy, it is tracked every step and every epoch. This is a direct way to see how our model performs at classifying fake news by telling us how many correct clarification it makes. We see it almost reaches 100% accuracy on our validation and training data.
 
-Wandb did track system efficency and hyperparameters. This means we didnt store what hardware we had for each training process and how well it was utilized. This means reproducibility is something you can achieve. We did not do any hyperparameter sweeps as our model performed very well on the first run on our dataset.
+Wandb did track system efficiency and hyperparameters. This means we didn't store what hardware we had for each training process and how well it was utilized. This means reproducibility is something you can achieve. We did not do any hyperparameter sweeps as our model performed very well on the first run on our dataset.
 
 A final comment of these graphs are that we only ran 5 epochs as the model managed to converge so fast not pushing us to improve it nor it training process.
 
@@ -446,7 +450,7 @@ Errors tried to be fixed manually based on the error trace. If the error was har
 
 We have implemented profiling but not optimized the code based on it. The test run was on a laptop with a rtx 4060 but the cloud hardware will look different.
 ![alt text](figures/profiling.png)
-Training was overall pretty quick but optimizing flow for better GPU utilization and occupancy could improve training time. Dataloading is at 0% which is good. Pinning memory or increasing batch could improve training time but it is also possible that the model is to simple for this GPU. 
+Training was overall pretty quick but optimizing flow for better GPU utilization and occupancy could improve training time. Dataloading is at 0% which is good. Pinning memory or increasing batch could improve training time but it is also possible that the model is to simple for this GPU.
 
 ## Working in the cloud
 
@@ -542,7 +546,7 @@ Finally, Compute Engine is used for training models with GPU support, allowing u
 >
 > Answer:
 
-We did manage to write an API for our model. We used FastAPI to do this. We did this by creating am API post endpoint called predict that runs inference on our optimized model. We also added a lifespan function that loads our model and vocab for tokenization, so it is ready for the prediction API. The prediction API recieves a title and text as strings as a pydantic schema and it outputs the prediction as a bool and the probabilty as a float. The API will raise a error code 500 if there is any internal error in the code.
+We did manage to write an API for our model. We used FastAPI to do this. We did this by creating am API post endpoint called predict that runs inference on our optimized model. We also added a lifespan function that loads our model and vocab for tokenization, so it is ready for the prediction API. The prediction API receives a title and text as strings as a pydantic schema and it outputs the prediction as a bool and the probability as a float. The API will raise a error code 500 if there is any internal error in the code.
 
 ### Question 24
 
@@ -566,6 +570,7 @@ When the image is finished building, it's automatically deployed using Cloud Run
 This means that when we merge a PR which touches relevant files like `api.py`, `api.dockerfile` or `pyproject.toml`, a new version of the API is built and deployed automatically.
 
 To invoke our deployed service, users can send POST requests to the Cloud Run endpoint:
+
 ```bash
 curl -X POST "https://my-fastapi-service-[hash]-ew.a.run.app/predict" \
   -H "Content-Type: application/json" \
@@ -590,7 +595,7 @@ Users can also access our frontend which provides a GUI for interacting with the
 
 We did write test for our API, both unittesting and load testing. Unittests included the calls you could make for the API, reading the root, predicting and report creation. This ensured it all functioned properly.
 
-Our load test was created using locust. We tested reading the root and the predict function. Given the predict call was the actual use of the model we put a weight of 3 on it. This also made it easy to identify which calls were causing issues as root caling would average to 25% error rate and predict to 75%. We did the load test with 25 users with a wait time between 1 and 5 second and a ramp up of 1 user. Below is a image of a short locust run:
+Our load test was created using locust. We tested reading the root and the predict function. Given the predict call was the actual use of the model we put a weight of 3 on it. This also made it easy to identify which calls were causing issues as root calling would average to 25% error rate and predict to 75%. We did the load test with 25 users with a wait time between 1 and 5 second and a ramp up of 1 user. Below is a image of a short locust run:
 
 ![Short locust test](figures/locust_test.png)
 
@@ -603,7 +608,7 @@ Our load test was created using locust. We tested reading the root and the predi
 >
 > Example:
 > *We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could*
-> *measure ... and ... that would inform us about this ... behaviour of our application.*
+> *measure ... and ... that would inform us about this ... behavior of our application.*
 >
 > Answer:
 
@@ -619,8 +624,6 @@ We set up an alert in Cloud Monitoring that triggers when we receive requests wi
 This helps us detect potential attacks or misuse of our API.
 The metrics endpoint allows us to debug issues and understand system behavior.
 Cloud Run's built-in monitoring gives us visibility into system health and performance over time.
-
-
 
 ## Overall discussion of project
 
@@ -655,7 +658,7 @@ Cloud Run's built-in monitoring gives us visibility into system health and perfo
 >
 > Answer:
 
-We implemented a frontend for out api, which makes it alot easier for potential user to test and try out our api, before integrating it in their system.
+We implemented a frontend for out api, which makes it a lot easier for potential user to test and try out our api, before integrating it in their system.
 Its also just a much nicer user experience to interact with the api through a GUI
 
 ### Question 29
@@ -677,7 +680,6 @@ The starting point of the diagram is our local setup, where we integrated hydra 
 The Google Cloud Platform loads code from our GitHub repository and builds docker images and sends them to artifacts registry. If it is a train image it will be send to GPU training using vertex AI. Model is also optimized. This will send models to our bucket and log training data with WandB. The models and data is connected to DVC.
 If it is an API image it will use serverless compute for running. This FastAPI will run on the serverless together with the streamlit fronted. The FastAPI will connects the backend to the frontend and loads the model from the bucket.The user can then access our frontend that is hosted at google cloud serverless that also runs the optimized model inference.
 
-
 ### Question 30
 
 > **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
@@ -693,8 +695,8 @@ If it is an API image it will use serverless compute for running. This FastAPI w
 The biggest challenges in the project was probably the cloud setup and working on features in the same files.
 The cloud setup was new to all of us, as we mainly have run models locally or using DTU HPC platform.
 Setting up workflow triggers and building docker images had a bit of a learning curve.
-As the project is on the smaller scale, multiple features were simutanious depending on the same files,
-which meant conflics. We overcome this by rebasing regularly and resolving conflics early.
+As the project is on the smaller scale, multiple features were simultaneous depending on the same files,
+which meant conflicts. We overcome this by rebasing regularly and resolving conflicts early.
 An example of this was the `api.py` were we had three consecutive PR's changing the file.
 
 ### Question 31
@@ -718,11 +720,10 @@ By this we mean a feature pushed by one student could be the work of multiple.
 
 s234862: Starting model architecture, setting up FastAPI predict endpoint and frontend.py, quantitizing, (testing pruning) and building ONNX graph for PyTorch model for faster inference. 
 
-s234814: Setup hydra for config management, weights and biases for training monitoring, logguru for logging and Prometheus for tracking our custem metrics.
+s234814: Setup hydra for config management, weights and biases for training monitoring, logguru for logging and Prometheus for tracking our custom metrics.
 Have also worked on CI pipeline, setting up rules, and build and trigger in GCloud.
 
-
-s234863: Set up the intial cookie cutter project and github repository.
+s234863: Set up the initial cookie cutter project and github repository.
 Also worked on unittests combining them with github through yaml files.
 Worked on load tests, logging of how users used API, report creation for data drifting, DVC, and google cloud bucket.
 
