@@ -113,7 +113,7 @@ will check the repositories and the code to verify your answers.
 * [x] Publish the documentation to GitHub Pages (M32)
 * [ ] Revisit your initial project description. Did the project turn out as you wanted?
 * [ ] Create an architectural diagram over your MLOps pipeline
-* [ ] Make sure all group members have an understanding about all parts of the project
+* [x] Make sure all group members have an understanding about all parts of the project
 * [x] Uploaded all your code to GitHub
 
 ## Group information
@@ -577,7 +577,20 @@ Our load test was created using locust. We tested reading the root and the predi
 >
 > Answer:
 
---- question 26 fill here ---
+We implemented monitoring by instrumenting our FastAPI service with Prometheus metrics.
+Our API exposes a `/metrics` endpoint that provides real-time telemetry data.
+Cloud Run automatically monitors standard metrics like request count, latency, CPU, and memory usage.
+
+We track several custom Prometheus metrics in our code: prediction_requests_total counts all API calls, prediction_errors_total tracks errors, and prediction_latency_seconds measures response times.
+We also monitor input_text_length_chars to detect unusually long inputs, prediction_confidence to see model certainty, and prediction_classes_total to track fake vs real predictions.
+Additionally we use requests_in_progress as a gauge to see current load.
+
+We set up an alert in Cloud Monitoring that triggers when we receive requests with text that is too large.
+This helps us detect potential attacks or misuse of our API.
+The metrics endpoint allows us to debug issues and understand system behavior.
+Cloud Run's built-in monitoring gives us visibility into system health and performance over time.
+
+
 
 ## Overall discussion of project
 
