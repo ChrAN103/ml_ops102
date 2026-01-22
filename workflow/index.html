@@ -1,0 +1,992 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christian Amtoft Nickelsen">
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../local-setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Workflow - mlops_project</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#development-workflow" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="mlops_project" class="md-header__button md-logo" aria-label="mlops_project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            mlops_project
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Workflow
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="mlops_project" class="md-nav__button md-logo" aria-label="mlops_project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    mlops_project
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-data-preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Data Preprocessing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-model-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Model Training
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-model-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Model Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-code-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Code Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Versioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Versioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring &amp; Logging
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring &amp; Logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running Locally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud-setup.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-data-preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Data Preprocessing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-model-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Model Training
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-model-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Model Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-code-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Code Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Versioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Versioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring &amp; Logging
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring &amp; Logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="development-workflow">Development Workflow</h1>
+<h2 id="project-structure">Project Structure</h2>
+<p>The project follows a standard MLOps structure with clear separation of concerns:</p>
+<pre><code>ml_ops102/
+├── src/mlops_project/     # Source code
+│   ├── data.py            # Data preprocessing
+│   ├── train.py           # Model training
+│   ├── evaluate.py        # Model evaluation
+│   ├── models.py          # Model architecture
+│   ├── api.py             # FastAPI service
+│   └── visualize.py       # Visualization utilities
+├── tests/                 # Unit and integration tests
+├── configs/               # Configuration files
+├── data/                  # Data storage (raw/processed)
+├── models/                # Trained model checkpoints
+├── dockerfiles/           # Docker configurations
+└── .github/workflows/     # CI/CD pipelines
+</code></pre>
+<h2 id="development-lifecycle">Development Lifecycle</h2>
+<h3 id="1-data-preprocessing">1. Data Preprocessing</h3>
+<p>Process raw news data into PyTorch tensors:</p>
+<pre><code class="language-bash">uv run invoke preprocess-data
+</code></pre>
+<p>This reads from <code>data/raw/News.csv</code> and creates train/val/test splits in <code>data/processed/</code>.</p>
+<h3 id="2-model-training">2. Model Training</h3>
+<p>Train the LSTM model with configurable hyperparameters:</p>
+<pre><code class="language-bash">uv run invoke train
+</code></pre>
+<p>Training uses:</p>
+<ul>
+<li><strong>Hydra</strong> for configuration management (<code>configs/config.yaml</code>)</li>
+<li><strong>PyTorch Lightning</strong> for training orchestration</li>
+<li><strong>Weights &amp; Biases</strong> for experiment tracking</li>
+<li><strong>Lightning checkpointing</strong> for model saving</li>
+</ul>
+<p>Checkpoints are saved to <code>models/</code> and logs to <code>logs/training/</code>.</p>
+<h3 id="3-model-evaluation">3. Model Evaluation</h3>
+<p>Evaluate trained models on the test set:</p>
+<pre><code class="language-bash">uv run invoke evaluate
+</code></pre>
+<p>Generates metrics and saves results to the reports directory.</p>
+<h3 id="4-testing">4. Testing</h3>
+<p>Run the full test suite with coverage:</p>
+<pre><code class="language-bash">uv run invoke test
+</code></pre>
+<p>Test categories:</p>
+<ul>
+<li><strong>Unit tests</strong>: <code>tests/test_data.py</code>, <code>tests/test_model.py</code></li>
+<li><strong>Integration tests</strong>: <code>tests/integrationtests/test_api.py</code></li>
+<li><strong>Performance tests</strong>: <code>tests/performancetests/locustfile.py</code></li>
+</ul>
+<h3 id="5-code-quality">5. Code Quality</h3>
+<p>The project uses pre-commit hooks for code quality:</p>
+<pre><code class="language-bash">uv run ruff format .
+uv run ruff check . --fix
+uv run pre-commit run --all-files
+</code></pre>
+<h2 id="configuration-management">Configuration Management</h2>
+<p>Hydra manages configurations in the <code>configs/</code> directory:</p>
+<ul>
+<li><code>config.yaml</code> - Main configuration</li>
+<li><code>config_cloud.yaml</code> - Cloud-specific settings</li>
+<li><code>config_cpu.yaml</code> / <code>config_gpu.yaml</code> - Device-specific configs</li>
+</ul>
+<p>Override parameters via command line:</p>
+<pre><code class="language-bash">uv run python src/mlops_project/train.py training.epochs=20 training.batch_size=64
+</code></pre>
+<h2 id="version-control">Version Control</h2>
+<h3 id="data-versioning">Data Versioning</h3>
+<p>DVC tracks large files:</p>
+<pre><code class="language-bash">dvc pull
+dvc push
+</code></pre>
+<p>Tracked files:</p>
+<ul>
+<li><code>data/raw/News.csv.dvc</code></li>
+<li><code>models/model.pt.dvc</code></li>
+</ul>
+<h3 id="code-versioning">Code Versioning</h3>
+<p>Git tracks code with automated workflows:</p>
+<ul>
+<li><strong>CI</strong>: Linting and testing on push</li>
+<li><strong>CD</strong>: Docker builds and cloud deployment on merge</li>
+</ul>
+<h2 id="task-management">Task Management</h2>
+<p>Use invoke for common tasks:</p>
+<pre><code class="language-bash">uv run invoke --list
+</code></pre>
+<p>Available tasks:</p>
+<ul>
+<li><code>preprocess-data</code> - Preprocess raw data</li>
+<li><code>train</code> - Train model</li>
+<li><code>evaluate</code> - Evaluate model</li>
+<li><code>test</code> - Run tests</li>
+<li><code>docker-build</code> - Build Docker images</li>
+<li><code>build-docs</code> - Build documentation</li>
+<li><code>serve-docs</code> - Serve documentation locally</li>
+</ul>
+<h2 id="monitoring-logging">Monitoring &amp; Logging</h2>
+<h3 id="training-monitoring">Training Monitoring</h3>
+<p>Experiments are tracked with:</p>
+<ul>
+<li><strong>Weights &amp; Biases</strong>: Real-time metrics and visualizations</li>
+<li><strong>PyTorch Lightning logs</strong>: Local CSV logs in <code>logs/training/</code></li>
+<li><strong>Hydra outputs</strong>: Per-run outputs in <code>outputs/YYYY-MM-DD_HH-MM-SS/</code></li>
+</ul>
+<h3 id="api-monitoring">API Monitoring</h3>
+<p>The FastAPI service includes:</p>
+<ul>
+<li><strong>Prometheus metrics</strong>: Endpoint <code>/metrics</code></li>
+<li><strong>Health checks</strong>: Endpoint <code>/health</code></li>
+<li><strong>Request logging</strong>: Structured JSON logs</li>
+</ul>
+<h2 id="docker-workflow">Docker Workflow</h2>
+<p>Build containers locally:</p>
+<pre><code class="language-bash">uv run invoke docker-build
+</code></pre>
+<p>Run training in Docker:</p>
+<pre><code class="language-bash">docker run -v $(pwd)/data:/app/data -v $(pwd)/models:/app/models train:latest
+</code></pre>
+<p>Run API in Docker:</p>
+<pre><code class="language-bash">docker run -p 8000:8000 -v $(pwd)/models:/app/models api:latest
+</code></pre>
+<h2 id="continuous-integration">Continuous Integration</h2>
+<p>GitHub Actions automatically:</p>
+<ol>
+<li>Run linting on every push</li>
+<li>Run tests on every push</li>
+<li>Build Docker images on merge to main</li>
+<li>Deploy to GCP Cloud Run on merge to main</li>
+</ol>
+<p>View workflow status in repository badges.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
