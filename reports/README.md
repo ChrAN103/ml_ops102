@@ -498,7 +498,7 @@ Finally, Compute Engine is used for training models with GPU support, allowing u
 >
 > Answer:
 
---- question 21 fill here ---
+![Cloud build](figures/build.png)
 
 ### Question 22
 
