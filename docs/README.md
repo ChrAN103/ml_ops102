@@ -20,7 +20,7 @@ uv run invoke build-docs
 Or directly:
 
 ```bash
-uv run mkdocs build --config-file docs/mkdocs.yaml --site-dir build
+uv run mkdocs build --config-file docs/mkdocs.yaml
 ```
 
 ## Serving Documentation Locally
@@ -42,9 +42,17 @@ Documentation is automatically deployed to GitHub Pages when changes are pushed 
 The deployment workflow:
 1. Detects changes in `docs/**`
 2. Builds the documentation with MkDocs
-3. Deploys to GitHub Pages
+3. Deploys to the `gh-pages` branch using `mkdocs gh-deploy`
 
 See `.github/workflows/docs.yaml` for the deployment configuration.
+
+### Manual Deployment
+
+To manually deploy documentation to GitHub Pages:
+
+```bash
+uv run mkdocs gh-deploy --config-file docs/mkdocs.yaml --force
+```
 
 ## Editing Documentation
 
