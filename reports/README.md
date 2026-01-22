@@ -543,7 +543,22 @@ We did manage to write an API for our model. We used FastAPI to do this. We did 
 >
 > Answer:
 
---- question 24 fill here ---
+For development we firstly ran our API locally directly to test and iterate fast.
+We then created a Docker image using api.dockerfile, and tested it worked as expected on our own machines.
+Then we setup GCloud to build the image whenever there are pushes to main in relevant files.
+When the image is finished building, it's automatically deployed using Cloud Run.
+
+This means that when we merge a PR which touches relevant files like `api.py`, `api.dockerfile` or `pyproject.toml`, a new version of the API is built and deployed automatically.
+
+To invoke our deployed service, users can send POST requests to the Cloud Run endpoint:
+```bash
+curl -X POST "https://my-fastapi-service-[hash]-ew.a.run.app/predict" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Breaking News", "text": "This is a news article text..."}'
+```
+
+The API returns a JSON response with the prediction (fake or real) and the model's confidence level.
+Users can also access our frontend which provides a GUI for interacting with the API.
 
 ### Question 25
 
