@@ -24,8 +24,13 @@ training:
 
 # Paths
 paths:
-  model_save_path: "models"
-  log_dir: "logs"
+  output_dir: "outputs"
+  models_dir: "${paths.output_dir}/models"
+  checkpoints_dir: "${paths.output_dir}/checkpoints"
+  log_dir: "${paths.output_dir}/logs"
+  model_filename: "model.pt"
+  vocab_filename: "vocab.json"
+  optimized_model_filename: "model_optimized.onnx"
 
 # Weights & Biases configuration
 wandb:
@@ -38,32 +43,31 @@ wandb:
 # Hydra configuration
 hydra:
   run:
-    dir: outputs/${now:%Y-%m-%d_%H-%M-%S}
+    dir: .
   sweep:
     dir: multirun/${now:%Y-%m-%d_%H-%M-%S}
     subdir: ${hydra.job.num}
+  job:
+    chdir: false
 
-# Profiling configuration 
+# Profiling configuration
 profiling:
   enabled: false
   trace_subdir: "profiler"
   use_cuda: "auto"
 
-  # Common profiler toggles
   record_shapes: true
   profile_memory: false
   with_stack: false
   with_flops: false
   with_modules: false
 
-  # Profiler schedule
   schedule:
     wait: 1
     warmup: 1
     active: 3
     repeat: 1
 
-  # Text summary settings 
   table_sort_by: "self_cpu_time_total"
   table_row_limit: 50
 

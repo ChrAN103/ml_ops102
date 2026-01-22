@@ -115,11 +115,15 @@ def train(cfg: DictConfig) -> None:
         cfg: Hydra configuration object containing all hyperparameters and settings.
     """
     data_path = Path(to_absolute_path(cfg.data.data_path))
-    model_save_path = Path(to_absolute_path(cfg.paths.model_save_path))
+
+    # Output directory structure (can point to a GCS-mounted bucket path)
+    output_dir = Path(to_absolute_path(cfg.paths.output_dir))
+    models_dir = Path(to_absolute_path(cfg.paths.models_dir))
+    checkpoints_dir = Path(to_absolute_path(cfg.paths.checkpoints_dir))
     log_dir = Path(to_absolute_path(cfg.paths.log_dir))
 
-    model_save_path.mkdir(parents=True, exist_ok=True)
-    log_dir.mkdir(parents=True, exist_ok=True)
+    for p in (output_dir, models_dir, checkpoints_dir, log_dir):
+        p.mkdir(parents=True, exist_ok=True)
 
     data_module = NewsDataModule(data_path=data_path, batch_size=cfg.data.batch_size)
     data_module.setup("fit")
@@ -134,7 +138,7 @@ def train(cfg: DictConfig) -> None:
     )
 
     checkpoint_callback = ModelCheckpoint(
-        dirpath=model_save_path,
+        dirpath=checkpoints_dir,
         filename="model-{epoch:02d}-{val_loss:.2f}",
         monitor="val_loss",
         mode="min",
@@ -186,7 +190,7 @@ def train(cfg: DictConfig) -> None:
     if best_model_path:
         logger.info(f"Best model saved to {best_model_path}")
 
-    final_checkpoint_path = model_save_path / "model.pt"
+    final_checkpoint_path = models_dir / cfg.paths.model_filename
     checkpoint_path = best_model_path if best_model_path else checkpoint_callback.last_model_path
     if checkpoint_path:
         checkpoint = torch.load(checkpoint_path, map_location="cpu")

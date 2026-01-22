@@ -1,9 +1,12 @@
 from pathlib import Path
 import time
 
+import hydra
 import numpy as np
 import onnxruntime as ort
 import torch
+from hydra.utils import to_absolute_path
+from omegaconf import DictConfig
 from sklearn.metrics import accuracy_score
 
 from mlops_project.data import NewsDataModule
@@ -123,11 +126,8 @@ def _load_pytorch_model(model_path: Path) -> tuple[Model, dict[str, int], int]:
     return model, vocab, vocab_size
 
 
-def compare_models() -> None:
+def compare_models(model_path: Path, onnx_path: Path, data_path: Path) -> None:
     """Compare PyTorch and ONNX accuracy and latency on the validation split."""
-    model_path = Path("models/model.pt")
-    onnx_path = Path("models/model_optimized.onnx")
-    data_path = Path("data/processed")
 
     if not model_path.exists():
         raise FileNotFoundError(f"Model checkpoint not found: {model_path}")
@@ -155,5 +155,21 @@ def compare_models() -> None:
     print(f"Speedup Factor: {speedup:.2f}x")
 
 
+@hydra.main(version_base=None, config_path="../../configs", config_name="config")
+def main(cfg: DictConfig) -> None:
+    """Compare PyTorch and ONNX models using configuration from Hydra.
+
+    Args:
+        cfg: Hydra configuration object containing all paths and settings.
+    """
+    models_dir = Path(to_absolute_path(cfg.paths.models_dir))
+    data_path = Path(to_absolute_path(cfg.data.data_path))
+
+    model_path = models_dir / cfg.paths.model_filename
+    onnx_path = models_dir / cfg.paths.optimized_model_filename
+
+    compare_models(model_path=model_path, onnx_path=onnx_path, data_path=data_path)
+
+
 if __name__ == "__main__":
-    compare_models()
+    main()
