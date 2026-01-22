@@ -502,7 +502,7 @@ Initially we wanted to train our model using the compute engine, thus two VM ins
 >
 > Answer:
 
---- question 19 fill here ---
+![Data bucket](figures/data_bucket.png)
 
 ### Question 20
 
@@ -650,7 +650,8 @@ Cloud Run's built-in monitoring gives us visibility into system health and perfo
 
 ![Cloud build](figures/billings.png)
 
-During the project group member s234826 used 5.3 dollars, s234863 used 3.93 dollars, s234862 used 3.73 dollars and s234814 used 4.03 dollars. As seen in the figure above, the Artifact Registry service was clearly the most expensive. Plenty of dockerfiles has been pushed to the registry during the project and the registry has a size of 155 GB due to that. A clean-up policy of keeping only the latest 5 versions of an image was implemented and running a command but perhaps it does not work as intended.
+During the project group member s234826 used 5.3 dollars, s234863 used 3.93 dollars, s234862 used 3.73 dollars and s234814 used 4.03 dollars. As seen in the figure above, the Artifact Registry service was clearly the most expensive. Plenty of dockerfiles has been pushed to the registry during the project and the registry has a size of 155 GB due to that. A clean-up policy of keeping only the latest 5 versions of an image was implemented but perhaps it does not work as intended. 
+Generally working with GCP was an exhaustive process due to the many services that one has to learn/use but provided a great insight into designing and operating scaleable ML systems. 
 
 ### Question 28
 
