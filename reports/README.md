@@ -109,8 +109,8 @@ will check the repositories and the code to verify your answers.
 
 ### Extra
 
-* [ ] Write some documentation for your application (M32)
-* [ ] Publish the documentation to GitHub Pages (M32)
+* [x] Write some documentation for your application (M32)
+* [x] Publish the documentation to GitHub Pages (M32)
 * [ ] Revisit your initial project description. Did the project turn out as you wanted?
 * [ ] Create an architectural diagram over your MLOps pipeline
 * [ ] Make sure all group members have an understanding about all parts of the project
@@ -318,13 +318,21 @@ We did make use of DVC in the following way: It was used for pushing and pulling
 >
 > Answer:
 
-We created continuous integration using linting tests, unittests and operating system tests. Our tests were added to github through the workflows folder ensuring everything was functioning and to high enough quality when merging branches on main.
+We created continuous integration using linting tests, unittests and operating system tests.
+Our tests were added to GitHub through the workflows folder ensuring everything was functioning and to high enough quality when merging branches on main.
 
-Our linting test: To ensure proper code formatting and quality we used Ruff. A linting test was also added to github so when merging on the main branch you’d have to keep your code up to the standards of Ruff. Ruff was chosen for its speed, automatic fixing capabilities and because of the recommendation from the course.
+Our linting test ([linting.yaml](https://github.com/ChrAN103/ml_ops102/blob/main/.github/workflows/linting.yaml)):
+To ensure proper code formatting and quality we used Ruff. A linting test was also added to GitHub so when merging on the main branch you'd have to keep your code up to the standards of Ruff.
+Ruff was chosen for its speed, automatic fixing capabilities and because of the recommendation from the course.
 
-Unittests: Our unittests covered files data.py, model.py and api.py. We created the tests in a dedicated tests folder containing test_data.py and test_model.py. These tests ensured data_path to different parts of the dataset existed and worked as well as testing model output, forward pass and initialization. We also had two subfolders for api testing, one fore test_api.py checking if the api functions and calls worked and another for performance test containing locustfile.py. This file was used to simulate many users and many request for our api.
+Unittests ([tests.yaml](https://github.com/ChrAN103/ml_ops102/blob/main/.github/workflows/tests.yaml)):
+Our unittests covered files data.py, model.py and api.py. We created the tests in a dedicated tests folder containing test_data.py and test_model.py.
+These tests ensured data_path to different parts of the dataset existed and worked as well as testing model output, forward pass and initialization.
+We also had two subfolders for api testing, one for test_api.py checking if the api functions and calls worked and another for performance test containing locustfile.py.
+This file was used to simulate many users and many requests for our api.
 
-Finally we also tested on operating systems including Ubuntu-latest, Windows-latest and MacOS-latest as well as python 3.13 and 3.14.
+Finally we also tested on operating systems including Ubuntu-latest, Windows-latest and MacOS-latest as well as Python 3.13 and 3.14.
+All workflows use uv with caching enabled to speed up runs.
 
 ## Running code and tracking experiments
 
