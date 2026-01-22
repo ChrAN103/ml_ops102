@@ -735,9 +735,7 @@ s234862: Starting model architecture, setting up FastAPI predict endpoint and fr
 s234814: Setup hydra for config management, weights and biases for training monitoring, logguru for logging and Prometheus for tracking our custom metrics.
 Have also worked on CI pipeline, setting up rules, and build and trigger in GCloud.
 
-s234863: Set up the initial cookie cutter project and github repository.
-Also worked on unittests combining them with github through yaml files.
-Worked on load tests, logging of how users used API, report creation for data drifting, DVC, and google cloud bucket.
+s234863: I set up the initial project structure using cookie cutter and github repository template and our github repository. I worked on implementing unittests and integrated them with github actions via yaml workflows. Created load tests for API. Implemented monitoring by logging API usage, and data drift detection report. Finally worked on DVC, and google cloud bucket.
 
 s234826: In charge of most of the GCP cloud services and deployment to cloud. Services include Vertex AI, Cloud Run, Cloud build etc. Files to support these services include the cloudbuild.yamls, dockerfiles and config files. Also worked on training the model and profiling.
 
