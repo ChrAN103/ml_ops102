@@ -444,6 +444,7 @@ This ensures our cloud deployments always use the latest code.
 > *run of our main code at some point that showed ...*
 >
 > Answer:
+
 Errors tried to be fixed manually based on the error trace. If the error was harder to fix we used AI tools like copilot to debug by helping understanding what was wrong or even just fixing them directly. We also helped each other fix errors if possible.
 
 We have implemented profiling but not optimized the code based on it. The test run was on a laptop with a rtx 4060 but the cloud hardware will look different.
@@ -465,12 +466,19 @@ Training was overall pretty quick but optimizing flow for better GPU utilization
 >
 > Answer:
 
-We used five main GCP services in our project.
+We used 6 main GCP services in our project:
+
 Cloud Storage (Bucket) stores our data and trained models in a bucket named `ml_ops_102_bucket`, which we use with DVC to sync data between local machines and the cloud.
+
 Artifact Registry stores our Docker images in `course02476-registry` located in the `europe-west1` region, where Cloud Build pushes newly created images.
+
 Cloud Build automates building and pushing Docker images, triggering when we merge code to main to build our training, API, evaluation, and frontend images.
+
 Cloud Run deploys and hosts our FastAPI service as `my-fastapi-service`, automatically scaling based on traffic and only charging when requests are being handled.
-Finally, Compute Engine is used for training models with GPU support, allowing us to run our training Docker container on VMs with CUDA-enabled GPUs for faster training.
+
+Secret manager securely stores sensitive information instead of storing the value of the WANDB key in a config file.
+
+Finally, Compute Engine/Vertex AI is used for training models with GPU support, allowing us to run our training Docker container on VMs with CUDA-enabled GPUs for faster training.
 
 ### Question 18
 
@@ -485,7 +493,7 @@ Finally, Compute Engine is used for training models with GPU support, allowing u
 >
 > Answer:
 
---- question 18 fill here ---
+Initially we wanted to train our model using the compute engine, thus two VM instances were created, one CPU-only instance and one with GPU. These instances were quickly disabled as we focused on the cloud deployment aspect, so we switched to the Vertex AI API. We used this service to train our models in GCP. The GPU specifications and how it is deployed to GCP are specified in Question 22.
 
 ### Question 19
 
@@ -527,7 +535,7 @@ Finally, Compute Engine is used for training models with GPU support, allowing u
 >
 > Answer:
 
---- question 22 fill here ---
+We managed to train our model in the cloud using the Vertex AI API. To do this, we needed to request a quota increase from 0 to 1 for a specific GPU in a specific region. We selected the NVIDIA T4 GPU in the europe-west1 region. We choose this GPU as it is cost-effective compared to heavier ones like A100. The GPU specifications are defined in a `config_gpu.yaml`. In this configuration file we also need to specify the correct data path to the data bucket at GCP and the path to the container image hosted in Artifact Registry. A training job is deployed via the `cloudbuildtrain.yaml`. The training workflow is automated such that a job is created every time the Cloud Build pipeline is triggered, hence when a new `train.dockerfile` image is built and pushed to the registry at GCP.
 
 ## Deployment
 
@@ -563,7 +571,7 @@ We did manage to write an API for our model. We used FastAPI to do this. We did 
 For development we firstly ran our API locally directly to test and iterate fast.
 We then created a Docker image using api.dockerfile, and tested it worked as expected on our own machines.
 Then we setup GCloud to build the image whenever there are pushes to main in relevant files.
-When the image is finished building, it's automatically deployed using Cloud Run.
+When the image is finished building, it's automatically deployed using Cloud Run. 
 
 This means that when we merge a PR which touches relevant files like `api.py`, `api.dockerfile` or `pyproject.toml`, a new version of the API is built and deployed automatically.
 
@@ -640,7 +648,9 @@ Cloud Run's built-in monitoring gives us visibility into system health and perfo
 >
 > Answer:
 
---- question 27 fill here ---
+![Cloud build](figures/billings.png)
+
+During the project group member s234826 used 5.3 dollars, s234863 used 3.93 dollars, s234862 used 3.73 dollars and s234814 used 4.03 dollars. As seen in the figure above, the Artifact Registry service was clearly the most expensive. Plenty of dockerfiles has been pushed to the registry during the project and the registry has a size of 155 GB due to that. A clean-up policy of keeping only the latest 5 versions of an image was implemented and running a command but perhaps it does not work as intended.
 
 ### Question 28
 
@@ -726,7 +736,7 @@ s234863: Set up the initial cookie cutter project and github repository.
 Also worked on unittests combining them with github through yaml files.
 Worked on load tests, logging of how users used API, report creation for data drifting, DVC, and google cloud bucket.
 
-s234826: 
+s234826: In charge of most of the GCP cloud services and deployment to cloud. Services include Vertex AI, Cloud Run, Cloud build etc. Files to support these services include the cloudbuild.yamls, dockerfiles and config files. Also worked on training the model and profiling.
 
 Generative AI: All AI use was through github copilot/cursor in Agent/Ask mode.
 Generative AI was used throughout the project.
