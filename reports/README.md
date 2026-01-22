@@ -430,8 +430,11 @@ This ensures our cloud deployments always use the latest code.
 > *run of our main code at some point that showed ...*
 >
 > Answer:
+Errors tried to be fixed manually based on the error trace. If the error was harder to fix we used AI tools like copilot to debug by helping understanding what was wrong or even just fixing them directly. We also helped each other fix errors if possible.
 
---- question 16 fill here ---
+We have implemented profiling but not optimized the code based on it. The test run was on a laptop with a rtx 4060 but the cloud hardware will look different.
+![alt text](figures/profiling.png)
+Training was overall pretty quick but optimizing flow for better GPU utilization and occupancy could improve training time. Dataloading is at 0% which is good. Pinning memory or increasing batch could improve training time but it is also possible that the model is to simple for this GPU. 
 
 ## Working in the cloud
 
