@@ -406,7 +406,17 @@ DVC was used for exactly what it is named, data version control. By tracking dat
 >
 > Answer:
 
---- question 15 fill here ---
+We developed four Docker images for our project: one for training, API deployment, evaluation, and frontend.
+Each image uses uv for dependency management and includes caching to speed up builds.
+
+Our training image ([train.dockerfile](https://github.com/ChrAN103/ml_ops102/blob/main/dockerfiles/train.dockerfile)) uses NVIDIA CUDA base image for GPU support.
+
+Our API image ([api.dockerfile](https://github.com/ChrAN103/ml_ops102/blob/main/dockerfiles/api.dockerfile)) deploys the FastAPI service.
+
+The images are automatically built and pushed to Google Artifact Registry using Cloud Build triggers when changes are merged to main.
+When a new API image is built, it automatically deploys to Cloud Run.
+When a new training image is built, it can be used to train a new model in the cloud.
+This ensures our cloud deployments always use the latest code.
 
 ### Question 16
 
