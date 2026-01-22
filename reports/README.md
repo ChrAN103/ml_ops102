@@ -318,7 +318,13 @@ We did make use of DVC in the following way: It was used for pushing and pulling
 >
 > Answer:
 
---- question 11 fill here ---
+We created continuous integration using linting tests, unittests and operating system tests. Our tests were added to github through the workflows folder ensuring everything was functioning and to high enough quality when merging branches on main.
+
+Our linting test: To ensure proper code formatting and quality we used Ruff. A linting test was also added to github so when merging on the main branch you’d have to keep your code up to the standards of Ruff. Ruff was chosen for its speed, automatic fixing capabilities and because of the recommendation from the course.
+
+Unittests: Our unittests covered files data.py, model.py and api.py. We created the tests in a dedicated tests folder containing test_data.py and test_model.py. These tests ensured data_path to different parts of the dataset existed and worked as well as testing model output, forward pass and initialization. We also had two subfolders for api testing, one fore test_api.py checking if the api functions and calls worked and another for performance test containing locustfile.py. This file was used to simulate many users and many request for our api.
+
+Finally we also tested on operating systems including Ubuntu-latest, Windows-latest and MacOS-latest as well as python 3.13 and 3.14.
 
 ## Running code and tracking experiments
 
@@ -354,7 +360,13 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
+To ensure we kept our repository scientifically correct we managed reproducibility and data/information loss. This was done using a combination of Hydra, Weights & biases (W&B) and DVC.
 
+Hydra was used for configuration of the model. It was achieved as it automatically created a unique output directory for each run. This saved the exact configuration and overrides. This means we have all the information for all runs right at our fingertips.
+
+Weights & Biases was used to log experiment metrics including: loss, accuracy, gpu/cpu, and artifacts. We also ensured it logged the model checkpoint.
+
+DVC was used for exactly what it is named, data version control. By tracking data versions we ensured the code and configuration could run against the right versions of the datasets.
 
 ### Question 14
 
