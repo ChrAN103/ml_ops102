@@ -103,7 +103,7 @@ will check the repositories and the code to verify your answers.
 * [x] Instrument your API with a couple of system metrics (M28)
 * [ ] Setup cloud monitoring of your instrumented application (M28)
 * [ ] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
-* [ ] If applicable, optimize the performance of your data loading using distributed data loading (M29)
+* [x] If applicable, optimize the performance of your data loading using distributed data loading (M29)
 * [ ] If applicable, optimize the performance of your training pipeline by using distributed training (M30)
 * [x] Play around with quantization, compilation and pruning for you trained models to increase inference speed (M31)
 
@@ -448,7 +448,12 @@ This ensures our cloud deployments always use the latest code.
 >
 > Answer:
 
---- question 17 fill here ---
+We used five main GCP services in our project.
+Cloud Storage (Bucket) stores our data and trained models in a bucket named `ml_ops_102_bucket`, which we use with DVC to sync data between local machines and the cloud.
+Artifact Registry stores our Docker images in `course02476-registry` located in the `europe-west1` region, where Cloud Build pushes newly created images.
+Cloud Build automates building and pushing Docker images, triggering when we merge code to main to build our training, API, evaluation, and frontend images.
+Cloud Run deploys and hosts our FastAPI service as `my-fastapi-service`, automatically scaling based on traffic and only charging when requests are being handled.
+Finally, Compute Engine is used for training models with GPU support, allowing us to run our training Docker container on VMs with CUDA-enabled GPUs for faster training.
 
 ### Question 18
 
