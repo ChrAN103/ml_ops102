@@ -52,69 +52,69 @@ will check the repositories and the code to verify your answers.
 
 ### Week 1
 
-* [ ] Create a git repository (M5)
-* [ ] Make sure that all team members have write access to the GitHub repository (M5)
-* [ ] Create a dedicated environment for you project to keep track of your packages (M2)
-* [ ] Create the initial file structure using cookiecutter with an appropriate template (M6)
-* [ ] Fill out the `data.py` file such that it downloads whatever data you need and preprocesses it (if necessary) (M6)
-* [ ] Add a model to `model.py` and a training procedure to `train.py` and get that running (M6)
-* [ ] Remember to either fill out the `requirements.txt`/`requirements_dev.txt` files or keeping your
+* [x] Create a git repository (M5)
+* [x] Make sure that all team members have write access to the GitHub repository (M5)
+* [x] Create a dedicated environment for you project to keep track of your packages (M2)
+* [x] Create the initial file structure using cookiecutter with an appropriate template (M6)
+* [x] Fill out the `data.py` file such that it downloads whatever data you need and preprocesses it (if necessary) (M6)
+* [x] Add a model to `model.py` and a training procedure to `train.py` and get that running (M6)
+* [x] Remember to either fill out the `requirements.txt`/`requirements_dev.txt` files or keeping your
     `pyproject.toml`/`uv.lock` up-to-date with whatever dependencies that you are using (M2+M6)
-* [ ] Remember to comply with good coding practices (`pep8`) while doing the project (M7)
-* [ ] Do a bit of code typing and remember to document essential parts of your code (M7)
-* [ ] Setup version control for your data or part of your data (M8)
-* [ ] Add command line interfaces and project commands to your code where it makes sense (M9)
-* [ ] Construct one or multiple docker files for your code (M10)
-* [ ] Build the docker files locally and make sure they work as intended (M10)
-* [ ] Write one or multiple configurations files for your experiments (M11)
-* [ ] Used Hydra to load the configurations and manage your hyperparameters (M11)
-* [ ] Use profiling to optimize your code (M12)
-* [ ] Use logging to log important events in your code (M14)
-* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
+* [x] Remember to comply with good coding practices (`pep8`) while doing the project (M7)
+* [x] Do a bit of code typing and remember to document essential parts of your code (M7)
+* [x] Setup version control for your data or part of your data (M8)
+* [x] Add command line interfaces and project commands to your code where it makes sense (M9)
+* [x] Construct one or multiple docker files for your code (M10)
+* [x] Build the docker files locally and make sure they work as intended (M10)
+* [x] Write one or multiple configurations files for your experiments (M11)
+* [x] Used Hydra to load the configurations and manage your hyperparameters (M11)
+* [x] Use profiling to optimize your code (M12)
+* [x] Use logging to log important events in your code (M14)
+* [x] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
 * [ ] Consider running a hyperparameter optimization sweep (M14)
-* [ ] Use PyTorch-lightning (if applicable) to reduce the amount of boilerplate in your code (M15)
+* [x] Use PyTorch-lightning (if applicable) to reduce the amount of boilerplate in your code (M15)
 
 ### Week 2
 
-* [ ] Write unit tests related to the data part of your code (M16)
-* [ ] Write unit tests related to model construction and or model training (M16)
-* [ ] Calculate the code coverage (M16)
-* [ ] Get some continuous integration running on the GitHub repository (M17)
-* [ ] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
-* [ ] Add a linting step to your continuous integration (M17)
-* [ ] Add pre-commit hooks to your version control setup (M18)
-* [ ] Add a continues workflow that triggers when data changes (M19)
-* [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
-* [ ] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
-* [ ] Create a trigger workflow for automatically building your docker images (M21)
-* [ ] Get your model training in GCP using either the Engine or Vertex AI (M21)
-* [ ] Create a FastAPI application that can do inference using your model (M22)
-* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
-* [ ] Write API tests for your application and setup continues integration for these (M24)
-* [ ] Load test your application (M24)
-* [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
-* [ ] Create a frontend for your API (M26)
+* [x] Write unit tests related to the data part of your code (M16)
+* [x] Write unit tests related to model construction and or model training (M16)
+* [x] Calculate the code coverage (M16)
+* [x] Get some continuous integration running on the GitHub repository (M17)
+* [x] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
+* [x] Add a linting step to your continuous integration (M17)
+* [x] Add pre-commit hooks to your version control setup (M18)
+* [x] Add a continues workflow that triggers when data changes (M19)
+* [x] Add a continues workflow that triggers when changes to the model registry is made (M19)
+* [x] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
+* [x] Create a trigger workflow for automatically building your docker images (M21)
+* [x] Get your model training in GCP using either the Engine or Vertex AI (M21)
+* [x] Create a FastAPI application that can do inference using your model (M22)
+* [x] Deploy your model in GCP using either Functions or Run as the backend (M23)
+* [x] Write API tests for your application and setup continues integration for these (M24)
+* [x] Load test your application (M24)
+* [x] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
+* [x] Create a frontend for your API (M26)
 
 ### Week 3
 
-* [ ] Check how robust your model is towards data drifting (M27)
-* [ ] Setup collection of input-output data from your deployed application (M27)
-* [ ] Deploy to the cloud a drift detection API (M27)
-* [ ] Instrument your API with a couple of system metrics (M28)
-* [ ] Setup cloud monitoring of your instrumented application (M28)
-* [ ] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
-* [ ] If applicable, optimize the performance of your data loading using distributed data loading (M29)
+* [x] Check how robust your model is towards data drifting (M27)
+* [x] Setup collection of input-output data from your deployed application (M27)
+* [x] Deploy to the cloud a drift detection API (M27)
+* [x] Instrument your API with a couple of system metrics (M28)
+* [x] Setup cloud monitoring of your instrumented application (M28)
+* [x] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
+* [x] If applicable, optimize the performance of your data loading using distributed data loading (M29)
 * [ ] If applicable, optimize the performance of your training pipeline by using distributed training (M30)
-* [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed (M31)
+* [x] Play around with quantization, compilation and pruning for you trained models to increase inference speed (M31)
 
 ### Extra
 
-* [ ] Write some documentation for your application (M32)
-* [ ] Publish the documentation to GitHub Pages (M32)
+* [x] Write some documentation for your application (M32)
+* [x] Publish the documentation to GitHub Pages (M32)
 * [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Create an architectural diagram over your MLOps pipeline
-* [ ] Make sure all group members have an understanding about all parts of the project
-* [ ] Uploaded all your code to GitHub
+* [x] Create an architectural diagram over your MLOps pipeline
+* [x] Make sure all group members have an understanding about all parts of the project
+* [x] Uploaded all your code to GitHub
 
 ## Group information
 
@@ -134,7 +134,7 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
-s234862, s234814, s234863, s234826 
+s234862, s234814, s234863, s234826
 
 ### Question 3
 > **Did you end up using any open-source frameworks/packages not covered in the course during your project? If so**
@@ -148,7 +148,7 @@ s234862, s234814, s234863, s234826
 >
 > Answer:
 
---- question 3 fill here ---
+We did not use any frameworks or packages that was not covered in the course.
 
 ## Coding environment
 
@@ -168,17 +168,23 @@ s234862, s234814, s234863, s234826
 >
 > Answer:
 
-
-
+We used uv for managing our dependencies.
+All dependencies are listed in `pyproject.toml`, and the exact versions are locked in uv.lock.
+Development dependencies (pytest, ruff, coverage, mkdocs, pre-commit) are organized in a separate `[dependency-groups] dev` section.
+When adding new packages, we used `uv add <package>` which automatically updates both files.
+For PyTorch specifically, we configured conditional index sources in `pyproject.toml` to pull CUDA-enabled builds on Linux/Windows and CPU builds on macOS.
 
 To get an exact copy of the environment, one has to run
 
-```
+```bash
 git clone https://github.com/ChrAN103/ml_ops102.git
 cd ml_ops102
 uv sync
-dvc pull
+uv run dvc pull
 ```
+
+The `uv sync` command creates a virtual environment and installs all locked dependencies.
+The `dvc pull` command fetches the data and model files from our GCS bucket.
 
 ### Question 5
 
@@ -194,7 +200,9 @@ dvc pull
 >
 > Answer:
 
---- question 5 fill here ---
+From the course MLOps cookiecutter template we have filled out the src, dockerfiles, configs, tests folders. We removed the notebooks folder as we did not use any jupyter files.
+We have have added a logs folder that contains wandb and hydra logs after running our train.py.
+src/mlops_project is our main folder with all python files, were development of data processing, training, optimizing, evaluating, visualizing, api's and frontend is done. config and dockerfiles folders contains files for correct setup. tests folder contains all our tests for finding errors. models, logs, reports/figures and data folders are updated by running files like data.py, train.py, optimize.py, evaluate.py, visualize.py or by using dvc.
 
 ### Question 6
 
@@ -209,7 +217,12 @@ dvc pull
 >
 > Answer:
 
-We used ruff check for linting and ruff format for formatting. These checks happen continuously and consistenly as they are integrated into a Github actions workflow that runs for every pull requests. And a Github ruleset was implemented to block force pushes to the main branch and require all changes to be merged through pull requests. 
+We used ruff check for linting and ruff format for formatting.
+These checks happen continuously and consistently as they are integrated into a Github actions workflow that runs for every pull requests.
+We also implemented a Github ruleset to block force pushes to the main branch and require all changes to be merged through pull requests.
+Typing in python is only suggestive, but it can be a great deal of help understanding interfaces.
+We used typing to make sure our function parameters are easy to understand.
+These concepts are important for larger project because, as it enforces a unified formatted code and quality through automatic testing.
 
 ## Version control
 
@@ -228,7 +241,10 @@ We used ruff check for linting and ruff format for formatting. These checks happ
 >
 > Answer:
 
---- question 7 fill here ---
+In total we have implemented 17 tests.
+We have 6 tests for data loading (`test_data.py`) that verify the NewsDataset class works correctly for train/val/test splits, vocabulary size, and sample output types.
+We have 9 tests for model construction (`test_model.py`) covering output dimensions, initialization, forward pass, and training step.
+We also have 2 API integration tests (`test_api.py`) for the root and predict endpoints.
 
 ### Question 8
 
@@ -243,7 +259,14 @@ We used ruff check for linting and ruff format for formatting. These checks happ
 >
 > Answer:
 
---- question 8 fill here ---
+The total code coverage is 65%, which includes all our source code.
+The API module has the highest coverage at 94%, while data.py (52%) and model.py (56%) have lower coverage.
+Even if we had 100% code coverage, we could not trust the code to be completely error-free.
+Code coverage only measures which lines are executed during tests, not whether the tests verify correct behavior.
+A test could execute every line but use assertions that never fail.
+Additionally, coverage cannot catch integration issues, race conditions, or edge cases that weren't anticipated.
+It also cannot verify that the model produces meaningful predictions or that the API handles concurrent requests correctly.
+Coverage is useful for identifying untested code paths, but should be combined with meaningful assertions and integration tests.
 
 ### Question 9
 
@@ -258,7 +281,14 @@ We used ruff check for linting and ruff format for formatting. These checks happ
 >
 > Answer:
 
---- question 9 fill here ---
+We made use of both branches and pull requests in our project.
+Each team member worked on short lived feature branches when implementing new functionality.
+For example, branches were created for API development, Docker configuration, and CI/CD setup.
+To merge code into main, we created pull requests that triggered our GitHub Actions workflows for linting and testing.
+A GitHub ruleset was configured to block direct pushes to main and require all changes to go through pull requests.
+This workflow helped us catch bugs early through automated testing and
+ensured code quality through the mandatory linting checks before merging.
+Before creating pull requests, we rebased our branches on main.
 
 ### Question 10
 
@@ -273,7 +303,7 @@ We used ruff check for linting and ruff format for formatting. These checks happ
 >
 > Answer:
 
---- question 10 fill here ---
+We did make use of DVC in the following way: It was used for pushing and pulling data between google cloud. It could also be used for version control of our data and models but as we did have changes to our dataset, it was mostly used as a way to connect our local computers to data in google cloud. Our current setup will support version control of our data and models by using DVC and pushing the dvc files to GitHub if changes was made under development. It could beneficial to have version control of our data if we had different preprocessing of our data.
 
 ### Question 11
 
@@ -290,7 +320,21 @@ We used ruff check for linting and ruff format for formatting. These checks happ
 >
 > Answer:
 
---- question 11 fill here ---
+We created continuous integration using linting tests, unittests and operating system tests.
+Our tests were added to GitHub through the workflows folder ensuring everything was functioning and to high enough quality when merging branches on main.
+
+Our linting test ([linting.yaml](https://github.com/ChrAN103/ml_ops102/blob/main/.github/workflows/linting.yaml)):
+To ensure proper code formatting and quality we used Ruff. A linting test was also added to GitHub so when merging on the main branch you'd have to keep your code up to the standards of Ruff.
+Ruff was chosen for its speed, automatic fixing capabilities and because of the recommendation from the course.
+
+Unittests ([tests.yaml](https://github.com/ChrAN103/ml_ops102/blob/main/.github/workflows/tests.yaml)):
+Our unittests covered files data.py, model.py and api.py. We created the tests in a dedicated tests folder containing test_data.py and test_model.py.
+These tests ensured data_path to different parts of the dataset existed and worked as well as testing model output, forward pass and initialization.
+We also had two subfolders for api testing, one for test_api.py checking if the api functions and calls worked and another for performance test containing locustfile.py.
+This file was used to simulate many users and many requests for our api.
+
+Finally we also tested on operating systems including Ubuntu-latest, Windows-latest and MacOS-latest as well as Python 3.13 and 3.14.
+All workflows use uv with caching enabled to speed up runs.
 
 ## Running code and tracking experiments
 
@@ -309,9 +353,11 @@ We used ruff check for linting and ruff format for formatting. These checks happ
 >
 > Answer:
 
-We used Hydra to configure experiments. All experiment parameters are defined in a config.yaml file. To experiment with training the model we could run:
+We used Hydra to configure experiments. All experiment parameters are defined in `config.yaml` including model architecture settings, training hyperparameters like learning rate and batch size, data paths, and logging options. Hydra allows overriding any parameter from the command line without modifying the config file. To experiment with different settings we could run:
 
 'uv run python src/mlops_project/train.py training.epochs=1'
+
+This flexibility made it easy to test different configurations quickly during development.
 
 ### Question 13
 
@@ -326,7 +372,13 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 13 fill here ---
+To ensure we kept our repository scientifically correct we managed reproducibility and data/information loss. This was done using a combination of Hydra, Weights & biases (W&B) and DVC.
+
+Hydra was used for configuration of the model. It was achieved as it automatically created a unique output directory for each run. This saved the exact configuration and overrides. This means we have all the information for all runs right at our fingertips.
+
+Weights & Biases was used to log experiment metrics including: loss, accuracy, gpu/cpu, and artifacts. We also ensured it logged the model checkpoint.
+
+DVC was used for exactly what it is named, data version control. By tracking data versions we ensured the code and configuration could run against the right versions of the datasets.
 
 ### Question 14
 
@@ -343,7 +395,19 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 14 fill here ---
+We used Weight and Biases for tracking our models training process. The following images are build from the logs wandb has saved.
+
+![Training and Validation Loss](figures/loss_curve.png)
+
+Above image tracks training and validation loss which are important factors when evaluating a models performance. We need this to see that our model converges We also see the model perhaps slightly overfits at the end since the validation loss slightly rises. Overall the loss was minimized almost to zero.
+
+![Training and Validation Accuracy](figures/accuracy_curve.png)
+
+Above is seen the training and validation accuracy, it is tracked every step and every epoch. This is a direct way to see how our model performs at classifying fake news by telling us how many correct clarification it makes. We see it almost reaches 100% accuracy on our validation and training data.
+
+Wandb did track system efficiency and hyperparameters. This means we didn't store what hardware we had for each training process and how well it was utilized. This means reproducibility is something you can achieve. We did not do any hyperparameter sweeps as our model performed very well on the first run on our dataset.
+
+A final comment of these graphs are that we only ran 5 epochs as the model managed to converge so fast not pushing us to improve it nor it training process.
 
 ### Question 15
 
@@ -358,7 +422,17 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 15 fill here ---
+We developed four Docker images for our project: one for training, API deployment, evaluation, and frontend.
+Each image uses uv for dependency management and includes caching to speed up builds.
+
+Our training image ([train.dockerfile](https://github.com/ChrAN103/ml_ops102/blob/main/dockerfiles/train.dockerfile)) uses NVIDIA CUDA base image for GPU support.
+
+Our API image ([api.dockerfile](https://github.com/ChrAN103/ml_ops102/blob/main/dockerfiles/api.dockerfile)) deploys the FastAPI service.
+
+The images are automatically built and pushed to Google Artifact Registry using Cloud Build triggers when changes are merged to main.
+When a new API image is built, it automatically deploys to Cloud Run.
+When a new training image is built, it can be used to train a new model in the cloud.
+This ensures our cloud deployments always use the latest code.
 
 ### Question 16
 
@@ -373,7 +447,11 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 16 fill here ---
+Errors tried to be fixed manually based on the error trace. If the error was harder to fix we used AI tools like copilot to debug by helping understanding what was wrong or even just fixing them directly. We also helped each other fix errors if possible.
+
+We have implemented profiling but not optimized the code based on it. The test run was on a laptop with a rtx 4060 but the cloud hardware will look different.
+![alt text](figures/profiling.png)
+Training was overall pretty quick but optimizing flow for better GPU utilization and occupancy could improve training time. Dataloading is at 0% which is good. Pinning memory or increasing batch could improve training time but it is also possible that the model is to simple for this GPU.
 
 ## Working in the cloud
 
@@ -390,7 +468,19 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 17 fill here ---
+We used 6 main GCP services in our project:
+
+Cloud Storage (Bucket) stores our data and trained models in a bucket named `ml_ops_102_bucket`, which we use with DVC to sync data between local machines and the cloud.
+
+Artifact Registry stores our Docker images in `course02476-registry` located in the `europe-west1` region, where Cloud Build pushes newly created images.
+
+Cloud Build automates building and pushing Docker images, triggering when we merge code to main to build our training, API, evaluation, and frontend images.
+
+Cloud Run deploys and hosts our FastAPI service as `my-fastapi-service`, automatically scaling based on traffic and only charging when requests are being handled.
+
+Secret manager securely stores sensitive information instead of storing the value of the WANDB key in a config file.
+
+Finally, Compute Engine/Vertex AI is used for training models with GPU support, allowing us to run our training Docker container on VMs with CUDA-enabled GPUs for faster training.
 
 ### Question 18
 
@@ -405,7 +495,7 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 18 fill here ---
+Initially we wanted to train our model using the compute engine, thus two VM instances were created, one CPU-only instance and one with GPU. These instances were quickly disabled as we focused on the cloud deployment aspect, so we switched to the Vertex AI API. We used this service to train our models in GCP. The GPU specifications and how it is deployed to GCP are specified in Question 22.
 
 ### Question 19
 
@@ -414,7 +504,7 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 19 fill here ---
+![Data bucket](figures/data_bucket.png)
 
 ### Question 20
 
@@ -423,7 +513,7 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 20 fill here ---
+![Container registry](figures/registry.png)
 
 ### Question 21
 
@@ -432,7 +522,7 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 21 fill here ---
+![Cloud build](figures/build.png)
 
 ### Question 22
 
@@ -447,7 +537,7 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 22 fill here ---
+We managed to train our model in the cloud using the Vertex AI API. To do this, we needed to request a quota increase from 0 to 1 for a specific GPU in a specific region. We selected the NVIDIA T4 GPU in the europe-west1 region. We choose this GPU as it is cost-effective compared to heavier ones like A100. The GPU specifications are defined in a `config_gpu.yaml`. In this configuration file we also need to specify the correct data path to the data bucket at GCP and the path to the container image hosted in Artifact Registry. A training job is deployed via the `cloudbuildtrain.yaml`. The training workflow is automated such that a job is created every time the Cloud Build pipeline is triggered, hence when a new `train.dockerfile` image is built and pushed to the registry at GCP.
 
 ## Deployment
 
@@ -464,7 +554,7 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 23 fill here ---
+We did manage to write an API for our model. We used FastAPI to do this. We did this by creating am API post endpoint called predict that runs inference on our optimized model. We also added a lifespan function that loads our model and vocab for tokenization, so it is ready for the prediction API. The prediction API receives a title and text as strings as a pydantic schema and it outputs the prediction as a bool and the probability as a float. The API will raise a error code 500 if there is any internal error in the code.
 
 ### Question 24
 
@@ -480,7 +570,23 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 24 fill here ---
+For development we firstly ran our API locally directly to test and iterate fast.
+We then created a Docker image using api.dockerfile, and tested it worked as expected on our own machines.
+Then we setup GCloud to build the image whenever there are pushes to main in relevant files.
+When the image is finished building, it's automatically deployed using Cloud Run.
+
+This means that when we merge a PR which touches relevant files like `api.py`, `api.dockerfile` or `pyproject.toml`, a new version of the API is built and deployed automatically.
+
+To invoke our deployed service, users can send POST requests to the Cloud Run endpoint:
+
+```bash
+curl -X POST "https://my-fastapi-service-[hash]-ew.a.run.app/predict" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Breaking News", "text": "This is a news article text..."}'
+```
+
+The API returns a JSON response with the prediction (fake or real) and the model's confidence level.
+Users can also access our frontend which provides a GUI for interacting with the API.
 
 ### Question 25
 
@@ -495,7 +601,11 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 25 fill here ---
+We did write test for our API, both unittesting and load testing. Unittests included the calls you could make for the API, reading the root, predicting and report creation. This ensured it all functioned properly.
+
+Our load test was created using locust. We tested reading the root and the predict function. Given the predict call was the actual use of the model we put a weight of 3 on it. This also made it easy to identify which calls were causing issues as root calling would average to 25% error rate and predict to 75%. We did the load test with 25 users with a wait time between 1 and 5 second and a ramp up of 1 user. Below is a image of a short locust run:
+
+![Short locust test](figures/locust_test.png)
 
 ### Question 26
 
@@ -506,11 +616,22 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Example:
 > *We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could*
-> *measure ... and ... that would inform us about this ... behaviour of our application.*
+> *measure ... and ... that would inform us about this ... behavior of our application.*
 >
 > Answer:
 
---- question 26 fill here ---
+We implemented monitoring by instrumenting our FastAPI service with Prometheus metrics.
+Our API exposes a `/metrics` endpoint that provides real-time telemetry data.
+Cloud Run automatically monitors standard metrics like request count, latency, CPU, and memory usage.
+
+We track several custom Prometheus metrics in our code: prediction_requests_total counts all API calls, prediction_errors_total tracks errors, and prediction_latency_seconds measures response times.
+We also monitor input_text_length_chars to detect unusually long inputs, prediction_confidence to see model certainty, and prediction_classes_total to track fake vs real predictions.
+Additionally we use requests_in_progress as a gauge to see current load.
+
+We set up an alert in Cloud Monitoring that triggers when we receive requests with text that is too large.
+This helps us detect potential attacks or misuse of our API.
+The metrics endpoint allows us to debug issues and understand system behavior.
+Cloud Run's built-in monitoring gives us visibility into system health and performance over time.
 
 ## Overall discussion of project
 
@@ -529,7 +650,10 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 27 fill here ---
+![Cloud build](figures/billings.png)
+
+During the project group member s234826 used 5.3 dollars, s234863 used 3.93 dollars, s234862 used 3.73 dollars and s234814 used 4.03 dollars. As seen in the figure above, the Artifact Registry service was clearly the most expensive. Plenty of dockerfiles has been pushed to the registry during the project and the registry has a size of 155 GB due to that. A clean-up policy of keeping only the latest 5 versions of an image was implemented but perhaps it does not work as intended.
+Generally working with GCP was an exhaustive process due to the many services that one has to learn/use but provided a great insight into designing and operating scaleable ML systems.
 
 ### Question 28
 
@@ -545,7 +669,8 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 28 fill here ---
+We implemented a frontend for out api, which makes it a lot easier for potential user to test and try out our api, before integrating it in their system.
+Its also just a much nicer user experience to interact with the api through a GUI
 
 ### Question 29
 
@@ -562,7 +687,10 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 29 fill here ---
+![this figure](figures/overview.png)
+The starting point of the diagram is our local setup, where we integrated hydra configs and test for our source code. A precommit ruff check runs before pushing to GitHub. When a branch is merged into main Github actions triggers and os, linting and unit tests. Developers can access code here and pull data using DVC.
+The Google Cloud Platform loads code from our GitHub repository and builds docker images and sends them to artifacts registry. If it is a train image it will be send to GPU training using vertex AI. Model is also optimized by quantatizing and porting to ONNX. Then it will send model and vocab to our bucket. It will also log training data and metrics in real time with WandB. The models and data in the bucket is connected to DVC.
+If it is an API docker image it will use serverless compute for hosting. The FastAPI will run on the serverless compute together with the streamlit fronted. The FastAPI will connects the backend to the frontend and loads the model from the bucket.The user can then access our frontend that is hosted at google cloud serverless that also runs the optimized model inference.
 
 ### Question 30
 
@@ -576,7 +704,12 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 >
 > Answer:
 
---- question 30 fill here ---
+The biggest challenges in the project was probably the cloud setup and working on features in the same files.
+The cloud setup was new to all of us, as we mainly have run models locally or using DTU HPC platform.
+Setting up workflow triggers and building docker images had a bit of a learning curve.
+As the project is on the smaller scale, multiple features were simultaneous depending on the same files,
+which meant conflicts. We overcome this by rebasing regularly and resolving conflicts early.
+An example of this was the `api.py` were we had three consecutive PR's changing the file.
 
 ### Question 31
 
@@ -594,4 +727,20 @@ We used Hydra to configure experiments. All experiment parameters are defined in
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
---- question 31 fill here ---
+Overall deep collaboration has been made across the board.
+By this we mean a feature pushed by one student could be the work of multiple.
+
+s234862: Starting model architecture, setting up FastAPI predict endpoint and frontend.py, quantitizing, (testing pruning) and building ONNX graph for PyTorch model for faster inference.
+
+s234814: Setup hydra for config management, weights and biases for training monitoring, logguru for logging and Prometheus for tracking our custom metrics.
+Have also worked on CI pipeline, setting up rules, and build and trigger in GCloud.
+
+s234863: I set up the initial project structure using cookie cutter and github repository template and our github repository. I worked on implementing unittests and integrated them with github actions via yaml workflows. Created load tests for API. Implemented monitoring by logging API usage, and data drift detection report. Finally worked on DVC, and google cloud bucket.
+
+s234826: In charge of most of the GCP cloud services and deployment to cloud. Services include Vertex AI, Cloud Run, Cloud build etc. Files to support these services include the cloudbuild.yamls, dockerfiles and config files. Also worked on training the model and profiling.
+
+Generative AI: All AI use was through github copilot/cursor in Agent/Ask mode.
+Generative AI was used throughout the project.
+Most use was for debugging and understanding bugs and errors we stumbled upon.
+Furthermore AI has been used in some parts to get us started on larger and less straight forward parts of the project if the code given in the course was not sufficient for our workcase.
+Lastly it has been a helping hand for logic problems.
