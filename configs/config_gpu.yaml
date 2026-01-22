@@ -6,6 +6,9 @@ workerPoolSpecs:
     replicaCount: 1
     containerSpec:
         imageUri: europe-west1-docker.pkg.dev/ml-ops102-drive/course02476-registry/train:latest
+        args:
+        - data.data_path=/gcs/ml_ops_102_bucket/data/processed
+        - paths.model_save_path=/gcs/ml_ops_102_bucket/models
         env:
-            - name: CONFIG_NAME
-              value: config_cloud
+        - name: WANDB_API_KEY
+          value: "${WANDB_API_KEY}"
