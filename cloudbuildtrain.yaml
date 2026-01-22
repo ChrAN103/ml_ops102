@@ -27,6 +27,7 @@ steps:
     - |
       apk add --no-cache gettext
       envsubst < configs/config_gpu.yaml > /tmp/config_gpu.yaml
+      mv /tmp/config_gpu.yaml configs/config_gpu.yaml
   secretEnv: ["WANDB_API_KEY"]
 
 - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
@@ -39,7 +40,7 @@ steps:
       gcloud ai custom-jobs create \
         --region=europe-west1 \
         --display-name="train-${BUILD_ID}" \
-        --config="/tmp/config_gpu.yaml"
+        --config="configs/config_gpu.yaml"
 
 availableSecrets:
   secretManager:

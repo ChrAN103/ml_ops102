@@ -9,7 +9,6 @@ workerPoolSpecs:
         args:
         - data.data_path=/gcs/ml_ops_102_bucket/data/processed
         - paths.model_save_path=/gcs/ml_ops_102_bucket/models
-        - training.epochs=1
         env:
         - name: WANDB_API_KEY
           value: "${WANDB_API_KEY}"
