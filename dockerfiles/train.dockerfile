@@ -9,11 +9,14 @@ RUN apt-get update \
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:$PATH"
 
+ENV UV_PYTHON_DOWNLOADS=never
+ENV UV_NO_MANAGED_PYTHON=1
+ENV UV_LINK_MODE=copy
+
 WORKDIR /app
 
 COPY pyproject.toml uv.lock README.md LICENSE ./
 
-ENV UV_LINK_MODE=copy
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-install-project
 
 COPY src/ src/
