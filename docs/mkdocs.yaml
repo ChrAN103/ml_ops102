@@ -21,3 +21,6 @@ plugins:
 
 nav:
   - Home: index.md
+  - Workflow: workflow.md
+  - Running Locally: local-setup.md
+  - Cloud Setup: cloud-setup.md
